@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Idea Box</title>
+    <link rel="stylesheet" href="normalize.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <aside class="aside">
+      <h1 class="aside__h1">Idea Box Redux</h1>
+      <h2 class="aside__h2">Filter Starred Ideas</h2>
+      <button class="aside__button aside__button-large">
+        Show Starred Ideas
+      </button>
+      <h2 class="aside__h2">Filter by Quality</h2>
+      <button class="aside__button aside__button-quality">Swill</button>
+      <button class="aside__button aside__button-quality">Plausible</button>
+      <button class="aside__button aside__button-quality">Genius</button>
+      <h2 class="aside__h2">New Quality</h2>
+      <input class="aside__input" type="text" />
+      <button class="aside__button aside__button-large">Add New Quality</button>
+    </aside>
+    <section class="section">
+      <form class="section__form">
+        <label class="section__form__label" for="title">Title</label>
+        <input class="section__form__input-title" type="text" name="title" />
+        <label class="section__form__label" for="body">Body</label>
+        <input class="section__form__input-body" type="text-area" name="body" />
+        <div class="section__form__div">
+          <img
+            class="section__form__div__img-search"
+            src="images/search.svg"
+            alt="search icon"
+          />
+          <button class="section__form__div__button">Save</button>
+        </div>
+      </form>
+    </section>
+    <main class="main">
+      <container class="main__container" data-id="X">
+        <header class="main__container__header">
+          <img
+            class="main__container__header__img-starred"
+            src="images/star.svg"
+            alt="starred"
+          />
+          <img
+            class="main__container__header__img-delete"
+            src="images/delete.svg"
+            alt="delete button"
+          />
+        </header>
+        <h3 class="main__container__h3">Idea title</h3>
+        <p class="main__container__p">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo a,
+          quidem rerum quis ipsum veritatis earum et voluptates suscipit ut
+          laudantium cupiditate blanditiis. Quaerat odit dolores nobis, adipisci
+          omnis nesciunt?
+        </p>
+        <footer class="main__container__footer">
+          <img
+            class="main__container__footer__img-upvote"
+            src="images/upvote.svg"
+            alt="increase quality"
+          />
+          <p class="main__container__footer__p">Quality: Swill</p>
+          <img
+            class="main__container__footer__img-downvote"
+            src="images/downvote.svg"
+            alt="decrease quality"
+          />
+        </footer>
+      </container>
+    </main>
+  </body>
+  <script src="idea.js"></script>
+  <script src="main.js"></script>
+</html>
