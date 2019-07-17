@@ -5,7 +5,7 @@ var saveButton = document.querySelector('.section__form__div__button');
 var main = document.querySelector('.main');
 
 // Functions on page load
-promptIdea();
+// promptIdea();
 reassignClass();
 spliceOnLoad();
 persist();
@@ -22,7 +22,7 @@ bodyInput.addEventListener('keyup', enableSaveButton);
 function saveHandler(event) {
   event.preventDefault();
   newIdea();
-  promptIdea();
+  // promptIdea();
   clearInput(titleInput);
   clearInput(bodyInput);
 }
@@ -97,19 +97,19 @@ function appendCard(idea) {
   );
 }
 
-function promptIdea() {
-  if (ideaArray.length === 0) {
-    main.insertAdjacentHTML(
-      'afterbegin',
-      `<p class= main__p-idea-prompt>Give Ideas!</p>`
-    );
-  } else if (ideaArray.length > 1) {
-    return;
-  } else {
-    var prompt = document.querySelector('.main__p-idea-prompt');
-    prompt.remove();
-  }
-}
+// function promptIdea() {
+//   if (ideaArray.length === 0) {
+//     main.insertAdjacentHTML(
+//       'afterbegin',
+//       `<p class= main__p-idea-prompt>Give Ideas!</p>`
+//     );
+//   } else if (ideaArray.length > 1) {
+//     return;
+//   } else {
+//     var prompt = document.querySelector('.main__p-idea-prompt');
+//     prompt.remove();
+//   }
+// }
 
 function enableSaveButton() {
   if (titleInput.value !== '' && bodyInput.value !== '') {
@@ -145,9 +145,9 @@ function deleteCard(event) {
 function editCard(classX, event) {
   var cardIndex = findIndex(event);
   if (event.target.closest(classX)) {
-    event.target.closest(classX).contentEditable = true;
     var bodyText = document.querySelector(classX);
-    ideaArray[cardIndex].body = bodyText.innerText;
+    ideaArray[cardIndex].body = event.target.innerText;
+    ideaArray[cardIndex].saveToStorage(ideaArray);
   }
 }
 
