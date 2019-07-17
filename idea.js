@@ -7,22 +7,18 @@ class Idea {
     this.quality = quality || 0;
   }
 
-  saveToStorage(ideaArray){
-      localStorage.setItem("ideaObj", JSON.stringify(ideaArray));
+  saveToStorage(ideaArray) {
+    localStorage.setItem('ideaObj', JSON.stringify(ideaArray));
   }
 
-  deleteFromStorage(cardIndex){
-    console.log('we deleted the thing we wanted')
+  deleteFromStorage(cardIndex) {
     ideaArray.splice(cardIndex, 1);
     this.saveToStorage(ideaArray);
   }
 
-  // updateIDea(){
-
-  // }
+  // updateIdea() {}
 
   // updateQuality(){
 
   // }
 }
-
