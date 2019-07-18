@@ -155,11 +155,11 @@ function starIt(event) {
     if (ideaArray[cardIndex].star == false) {
       targetStar.src = starred;
       ideaArray[cardIndex].star = true;
-      ideaArray[cardIndex].saveToStorage(ideaArray);
+      ideaArray[cardIndex].updateIdea(ideaArray);
     } else {
       targetStar.src = notStarred;
       ideaArray[cardIndex].star = false;
-      ideaArray[cardIndex].saveToStorage(ideaArray);
+      ideaArray[cardIndex].updateIdea(ideaArray);
     }
   }
 }
@@ -174,7 +174,7 @@ function upvote(event) {
         return;
       } else {
         ideaArray[cardIndex].quality += 1;
-        ideaArray[cardIndex].saveToStorage(ideaArray);
+        ideaArray[cardIndex].updateQuality(ideaArray);
         qualityTextChange(ideaArray[cardIndex].quality, event);
         // persist();
       }
@@ -192,7 +192,7 @@ function downvote(event) {
         return;
       } else {
         ideaArray[cardIndex].quality -= 1;
-        ideaArray[cardIndex].saveToStorage(ideaArray);
+        ideaArray[cardIndex].updateQuality(ideaArray);
         qualityTextChange(ideaArray[cardIndex].quality, event);
         // persist();
       }
@@ -212,7 +212,7 @@ function editCardTitle(classX, event) {
   var cardIndex = findIndex(event);
   if (event.target.closest(classX)) {
     ideaArray[cardIndex].title = event.target.innerText;
-    ideaArray[cardIndex].saveToStorage(ideaArray);
+    ideaArray[cardIndex].updateIdea(ideaArray);
   }
 }
 
@@ -220,7 +220,7 @@ function editCardP(classY, event) {
   var cardIndex = findIndex(event);
   if (event.target.closest(classY)) {
     ideaArray[cardIndex].body = event.target.innerText;
-    ideaArray[cardIndex].saveToStorage(ideaArray);
+    ideaArray[cardIndex].updateIdea(ideaArray);
   }
 }
 

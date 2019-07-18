@@ -16,9 +16,11 @@ class Idea {
     this.saveToStorage(ideaArray);
   }
 
-  // updateIdea() {}
+  updateIdea(ideaArray) {
+    localStorage.setItem('ideaObj', JSON.stringify(ideaArray));
+  }
 
-  // updateQuality(){
-
-  // }
+  updateQuality(ideaArray){
+    localStorage.setItem('ideaObj', JSON.stringify(ideaArray));
+  }
 }
