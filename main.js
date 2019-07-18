@@ -35,7 +35,8 @@ function mainHandler(event) {
   editCardTitle('.main__container__h3', event);
   editCardP('.main__container__p', event);
   starIt(event);
-  voteIt(event);
+  upvote(event);
+  downvote(event);
 }
 
 function newIdea() {
@@ -147,31 +148,50 @@ function starIt(event) {
   var notStarred = 'images/star.svg';
   var starred = 'images/star-active.svg';
 
-  if (ideaArray[cardIndex].star == false) {
-    targetStar.src = starred;
-    ideaArray[cardIndex].star = true;
-    ideaArray[cardIndex].saveToStorage(ideaArray);
-  } else {
-    targetStar.src = notStarred;
-    ideaArray[cardIndex].star = false;
-    ideaArray[cardIndex].saveToStorage(ideaArray);
+  if (event.target == targetStar) {
+    if (ideaArray[cardIndex].star == false) {
+      targetStar.src = starred;
+      ideaArray[cardIndex].star = true;
+      ideaArray[cardIndex].saveToStorage(ideaArray);
+    } else {
+      targetStar.src = notStarred;
+      ideaArray[cardIndex].star = false;
+      ideaArray[cardIndex].saveToStorage(ideaArray);
+    }
   }
 }
 
-function voteIt(event) {
+function upvote(event) {
   var cardIndex = findIndex(event);
   var upvote = event.target.closest('.main__container__footer__img-upvote');
-  var downvote = event.target.closest('.main__container__footer__img-downvote');
-  var q = qualities[cardIndex].quality;
-
-  if (upvote) {
-    console.log('upvote');
-  } else if (downvote) {
-    {
-      console.log('downvote');
+  // var q = qualities[cardIndex].quality;
+  if (event.target == upvote) {
+    if (upvote) {
+      if (ideaArray[cardIndex].quality > qualities.length - 1) {
+        return;
+      } else {
+        console.log('before: ', ideaArray[cardIndex].quality);
+        ideaArray[cardIndex].quality += 1;
+        console.log('after: ', ideaArray[cardIndex].quality);
+      }
     }
-    // ideaArray[cardIndex].quality =
-    // update text on the card
+  }
+}
+
+function downvote(event) {
+  var cardIndex = findIndex(event);
+  var downvote = event.target.closest('.main__container__footer__img-downvote');
+  // var q = qualities[cardIndex].quality;
+  if (event.target == downvote) {
+    if (downvote) {
+      if (ideaArray[cardIndex].quality <= 0) {
+        return;
+      } else {
+        console.log('before: ', ideaArray[cardIndex].quality);
+        ideaArray[cardIndex].quality -= 1;
+        console.log('after: ', ideaArray[cardIndex].quality);
+      }
+    }
   }
 }
 
