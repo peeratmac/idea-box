@@ -30,7 +30,7 @@ body {
   padding-bottom: 10px;
 }
 
-.aside__button-large{
+.aside__button-large {
   background-color: #5356a4;
   color: #e9e9f3;
   border: 1px solid #353567;
@@ -39,10 +39,9 @@ body {
   font-size: 23px;
   font-weight: 700;
   margin-bottom: 15px;
-
 }
 
-.aside__div{
+.aside__div {
   width: 100%;
   height: 1px;
   background-color: #353567;
@@ -57,7 +56,7 @@ body {
   margin-top: 30px;
 }
 
-.aside__button-quality{
+.aside__button-quality {
   display: block;
   border: none;
   background-color: inherit;
@@ -67,7 +66,7 @@ body {
   margin-left: -5px;
 }
 
-.aside__input{
+.aside__input {
   width: 100%;
   height: 40px;
   padding-left: 10px;
@@ -82,8 +81,6 @@ body {
   grid-area: section;
   height: 100%;
 }
-
-
 
 .section__form {
   display: block;
@@ -153,5 +150,3 @@ img {
   height: 30px;
   margin: 5px;
 }
-
-
