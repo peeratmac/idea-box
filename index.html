@@ -10,20 +10,19 @@
   <body>
     <aside class="aside">
       <h1 class="aside__h1">Idea Box Redux</h1>
-      <div class="aside__div"></div>
       <h2 class="aside__h2">Filter Starred Ideas</h2>
       <button class="aside__button aside__button-large">
         Show Starred Ideas
       </button>
-      <div class="aside__div"></div>
-      <h2 class="aside__h2">Filter by Quality</h2>
-      <button class="aside__button aside__button-quality">Swill</button>
-      <button class="aside__button aside__button-quality">Plausible</button>
-      <button class="aside__button aside__button-quality">Genius</button>
-      <h2 class="aside__h2">New Quality</h2>
-      <input class="aside__input" type="text" />
-      <button class="aside__button aside__button-large">Add New Quality</button>
-      <div class="aside__div"></div>
+      <div class="aside__div">
+        <h2 class="aside__h2">Filter by Quality</h2>
+        <button class="aside__button aside__button-quality">Swill</button>
+        <button class="aside__button aside__button-quality">Plausible</button>
+        <button class="aside__button aside__button-quality">Genius</button>
+        <h2 class="aside__h2">New Quality</h2>
+        <input class="aside__input" type="text" />
+        <button class="aside__button aside__button-large">Add New Quality</button>
+      </div>
     </aside>
     <section class="section">
       <form class="section__form">
@@ -31,6 +30,7 @@
         <input class="section__form__input-title" type="text" name="title" />
         <label class="section__form__label" for="body">Body</label>
         <input class="section__form__input-body" type="text-area" name="body" />
+        <button disabled class="section__form__div__button">Save</button>
         <div class="section__form__div">
             <input class="section__form__div__input-search" type="text" placeholder="Search Ideas">
           <img
@@ -39,7 +39,6 @@
             alt="search icon"
             />
           </div>
-          <button disabled class="section__form__div__button">Save</button>
       </form>
     </section>
     <main class="main">
