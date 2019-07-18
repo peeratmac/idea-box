@@ -1,4 +1,5 @@
 var ideaArray = JSON.parse(localStorage.getItem('ideaObj')) || [];
+var qualities = ['Swill', 'Plausible', 'Genius'];
 var titleInput = document.querySelector('.section__form__input-title');
 var bodyInput = document.querySelector('.section__form__input-body');
 var saveButton = document.querySelector('.section__form__div__button');
@@ -14,7 +15,8 @@ persist();
 saveButton.addEventListener('click', saveHandler);
 main.addEventListener('click', mainHandler);
 main.addEventListener('keyup', function() {
-  editCard('.main__container__p', event);
+  editCardTitle('.main__container__h3', event);
+  editCardP('.main__container__p', event);
 });
 titleInput.addEventListener('keyup', enableSaveButton);
 bodyInput.addEventListener('keyup', enableSaveButton);
@@ -30,8 +32,10 @@ function saveHandler(event) {
 function mainHandler(event) {
   findIndex(event);
   deleteCard(event);
-  editCard('.main__container__h3', event);
-  editCard('.main__container__p', event);
+  editCardTitle('.main__container__h3', event);
+  editCardP('.main__container__p', event);
+  starIt(event);
+  voteIt(event);
 }
 
 function newIdea() {
@@ -63,13 +67,14 @@ function reassignClass() {
 }
 
 function appendCard(idea) {
+  var s = idea.star ? 'images/star-active.svg' : 'images/star.svg';
   main.insertAdjacentHTML(
     'afterbegin',
     `<container class="main__container" data-id="${idea.id}">
   <header class="main__container__header">
     <img
       class="main__container__header__img-starred"
-      src="images/star.svg"
+      src="${s}"
       alt="starred"
     />
     <img
@@ -134,6 +139,42 @@ function findIndex(event) {
   }
 }
 
+function starIt(event) {
+  var cardIndex = findIndex(event);
+  var targetStar = event.target.closest(
+    '.main__container__header__img-starred'
+  );
+  var notStarred = 'images/star.svg';
+  var starred = 'images/star-active.svg';
+
+  if (ideaArray[cardIndex].star == false) {
+    targetStar.src = starred;
+    ideaArray[cardIndex].star = true;
+    ideaArray[cardIndex].saveToStorage(ideaArray);
+  } else {
+    targetStar.src = notStarred;
+    ideaArray[cardIndex].star = false;
+    ideaArray[cardIndex].saveToStorage(ideaArray);
+  }
+}
+
+function voteIt(event) {
+  var cardIndex = findIndex(event);
+  var upvote = event.target.closest('.main__container__footer__img-upvote');
+  var downvote = event.target.closest('.main__container__footer__img-downvote');
+  var q = qualities[cardIndex].quality;
+
+  if (upvote) {
+    console.log('upvote');
+  } else if (downvote) {
+    {
+      console.log('downvote');
+    }
+    // ideaArray[cardIndex].quality =
+    // update text on the card
+  }
+}
+
 function deleteCard(event) {
   var cardIndex = findIndex(event);
   if (event.target.closest('.main__container__header__img-delete')) {
@@ -142,10 +183,17 @@ function deleteCard(event) {
   }
 }
 
-function editCard(classX, event) {
+function editCardTitle(classX, event) {
   var cardIndex = findIndex(event);
   if (event.target.closest(classX)) {
-    var bodyText = document.querySelector(classX);
+    ideaArray[cardIndex].title = event.target.innerText;
+    ideaArray[cardIndex].saveToStorage(ideaArray);
+  }
+}
+
+function editCardP(classY, event) {
+  var cardIndex = findIndex(event);
+  if (event.target.closest(classY)) {
     ideaArray[cardIndex].body = event.target.innerText;
     ideaArray[cardIndex].saveToStorage(ideaArray);
   }

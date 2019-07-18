@@ -46,9 +46,10 @@ body {
   background-color: #A9AAD2;
 }
 
-.aside__div{
-border-top: 1px solid #353567;
-border-bottom: 1px solid #353567;
+.aside__div {
+  border-top: 1px solid #353567;
+  border-bottom: 1px solid #353567;
+  margin-bottom: 15px;
 }
 
 .aside__h2 {
@@ -57,7 +58,7 @@ border-bottom: 1px solid #353567;
   padding: 20px;
 }
 
-.aside__button-quality{
+.aside__button-quality {
   display: block;
   width: 100%;
   text-align: left;
@@ -70,6 +71,7 @@ border-bottom: 1px solid #353567;
   font-size: 1.2em;
   height: 30px;
 }
+
 
 .aside__button-quality:hover {
   background-color: #D1421A;
@@ -95,8 +97,6 @@ border-bottom: 1px solid #353567;
   height: 100%;
   padding-top: 20px;
 }
-
-
 
 .section__form {
   display: block;
@@ -229,8 +229,10 @@ border-bottom: 1px solid #353567;
 .main__container__footer__img-downvote:hover {
   transform: scale(1.2);
 }
+
 img {
   height: 30px;
   margin: 5px;
   cursor: pointer;
 }
+
