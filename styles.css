@@ -6,80 +6,96 @@
 body {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr;
+  /* grid-template-rows: 1fr 1fr 1fr 1fr; */
   grid-template-areas:
     'aside section section section'
     'aside section section section'
     'aside main main main'
     'aside main main main';
-  height: 100vh;
+  height: 100%;
   width: 100vw;
 }
 
 .aside {
   background-color: #1f1f3d;
   grid-area: aside;
-  padding: 20px;
 }
 
 .aside__h1 {
   color: #fff;
   font-size: 2em;
-  /*border-bottom: 1px solid #a9aad2;*/
-  margin: 0;
-  padding-bottom: 10px;
+  border-bottom: 1px solid #353567;;
+  padding: 20px;
 }
 
 .aside__button-large {
   background-color: #5356a4;
+  border: none;
   color: #e9e9f3;
-  border: 1px solid #353567;
-  width: 100%;
+  width: 90%;
   height: 40px;
-  font-size: 23px;
+  display: block;
+  font-size: 1.2em;
   font-weight: 700;
-  margin-bottom: 15px;
+  margin: 20px auto;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.aside__button-large:hover {
+  background-color: #A9AAD2;
 }
 
 .aside__div {
-  width: 100%;
-  height: 1px;
-  background-color: #353567;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  margin-left: -18px;
+  border-top: 1px solid #353567;
+  border-bottom: 1px solid #353567;
+  margin-bottom: 15px;
 }
 
 .aside__h2 {
   color: #bfbfdd;
-  font-size: 1.2em;
-  margin-top: 30px;
+  font-size: 1em;
+  padding: 20px;
 }
 
 .aside__button-quality {
   display: block;
+  width: 100%;
+  text-align: left;
   border: none;
-  background-color: inherit;
-  color: #ffffff;
-  font-size: 20px;
-  margin-bottom: 10px;
-  margin-left: -5px;
+  /* margin-bottom: 30px; */
+  color: #fff;
+  background-color: #1F1F3D;
+  padding-left: 20px;
+  cursor: pointer;
+  font-size: 1.2em;
+  height: 30px;
 }
 
-.aside__input {
-  width: 100%;
+
+.aside__button-quality:hover {
+  background-color: #D1421A;
+}
+
+/* .aside__button-quality:hover:before {
+  background-color: red;
+} */
+
+.aside__input{
+  width: 90%;
+  display: block;
+  margin: auto;
   height: 40px;
-  padding-left: 10px;
-  background-color: #e9e9f3;
-  border: 1px solid #353567;
-  margin-bottom: 20px;
-  margin-top: -8px;
+  border-radius: 2px;
+  margin-bottom: 30px;
+  border: none;
 }
 
 .section {
   background-color: #a9aad2;
   grid-area: section;
   height: 100%;
+  padding-top: 20px;
 }
 
 .section__form {
@@ -89,9 +105,61 @@ body {
   width: 45%;
 }
 
-.section__form__input-title,
+.section__form__input-title {
+  width: 100%;
+  margin: 10px 0px;
+  height: 40px;
+  border: none;
+  border-radius: 2px;
+}
+
 .section__form__input-body {
   width: 100%;
+  margin: 10px 0px;
+  height: 100px;
+  border: none;
+  border-radius: 2px;
+}
+
+.section__form__div {
+  display: flex;
+  flex-direction: row-reverse;
+  margin: 10px 0px 20px 0px;
+}
+
+.section__form__div__img-search {
+  background-color: #333567;
+  padding: 5px;
+  margin: 0px;
+  height: 40px;
+  border-radius: 2px 0px 0px 2px;
+}
+
+.section__form__div__input-search {
+  width: 100%;
+  border-radius: 0px 2px 2px 0px;
+  border: none;
+  padding: 10px;
+  font-size: .8em;
+}
+
+.section__form__div__button {
+  color: #fff;
+  background-color: #353567;
+  width: 100%;
+  height: 40px;
+  margin: 10px 0px 20px 0px;
+  border: none;
+  font-size: 1.2em;
+  font-weight: 300;
+  cursor: pointer;
+  box-shadow: 3px 3px grey;
+  border-radius: 2px;
+}
+
+.section__form__div__button:hover {
+  background-color: #5355A4;
+  box-shadow: 1.5px 1.5px grey;
 }
 
 /********   MAIN  ********/
@@ -103,6 +171,7 @@ body {
   grid-area: main;
   padding: 20px;
   height: 100%;
+  min-height: 100vh;
 }
 
 .main__container {
@@ -112,6 +181,12 @@ body {
   max-width: 300px;
   min-width: 250px;
   width: 30%;
+  margin: 20px;
+}
+
+.main__container:hover {
+  /* box-shadow: 5px 5px 5px 5px #A9AAD2; */
+  box-shadow: 0 4px 8px 0 #A9AAD2, 0 6px 20px 1px #A9AAD2;
 }
 
 .main__container__header {
@@ -140,13 +215,24 @@ body {
   justify-content: space-between;
   align-items: center;
   height: 40px;
+  position: relative;
+  margin-top: 127.5px;
 }
 
 /*.main__container__footer__p{
   font-weight: 
 }*/
 
+.main__container__header__img-starred:hover,
+.main__container__header__img-delete:hover,
+.main__container__footer__img-upvote:hover,
+.main__container__footer__img-downvote:hover {
+  transform: scale(1.2);
+}
+
 img {
   height: 30px;
   margin: 5px;
+  cursor: pointer;
 }
+
