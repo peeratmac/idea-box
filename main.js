@@ -35,7 +35,8 @@ function mainHandler(event) {
   editCardTitle('.main__container__h3', event);
   editCardP('.main__container__p', event);
   starIt(event);
-  voteIt(event);
+  upvote(event);
+  downvote(event);
 }
 
 function newIdea() {
@@ -68,6 +69,7 @@ function reassignClass() {
 
 function appendCard(idea) {
   var s = idea.star ? 'images/star-active.svg' : 'images/star.svg';
+
   main.insertAdjacentHTML(
     'afterbegin',
     `<container class="main__container" data-id="${idea.id}">
@@ -91,7 +93,9 @@ function appendCard(idea) {
       src="images/upvote.svg"
       alt="increase quality"
     />
-    <p class="main__container__footer__p">Quality: Swill</p>
+    <p class="main__container__footer__p">Quality: ${
+      qualities[idea.quality - 1]
+    }</p>
     <img
       class="main__container__footer__img-downvote"
       src="images/downvote.svg"
@@ -147,31 +151,52 @@ function starIt(event) {
   var notStarred = 'images/star.svg';
   var starred = 'images/star-active.svg';
 
-  if (ideaArray[cardIndex].star == false) {
-    targetStar.src = starred;
-    ideaArray[cardIndex].star = true;
-    ideaArray[cardIndex].saveToStorage(ideaArray);
-  } else {
-    targetStar.src = notStarred;
-    ideaArray[cardIndex].star = false;
-    ideaArray[cardIndex].saveToStorage(ideaArray);
+  if (event.target == targetStar) {
+    if (ideaArray[cardIndex].star == false) {
+      targetStar.src = starred;
+      ideaArray[cardIndex].star = true;
+      ideaArray[cardIndex].saveToStorage(ideaArray);
+    } else {
+      targetStar.src = notStarred;
+      ideaArray[cardIndex].star = false;
+      ideaArray[cardIndex].saveToStorage(ideaArray);
+    }
   }
 }
 
-function voteIt(event) {
+function upvote(event) {
   var cardIndex = findIndex(event);
   var upvote = event.target.closest('.main__container__footer__img-upvote');
-  var downvote = event.target.closest('.main__container__footer__img-downvote');
-  var q = qualities[cardIndex].quality;
 
-  if (upvote) {
-    console.log('upvote');
-  } else if (downvote) {
-    {
-      console.log('downvote');
+  if (event.target == upvote) {
+    if (upvote) {
+      if (ideaArray[cardIndex].quality >= qualities.length) {
+        return;
+      } else {
+        ideaArray[cardIndex].quality += 1;
+        ideaArray[cardIndex].saveToStorage(ideaArray);
+        qualityTextChange(ideaArray[cardIndex].quality, event);
+        // persist();
+      }
     }
-    // ideaArray[cardIndex].quality =
-    // update text on the card
+  }
+}
+
+function downvote(event) {
+  var cardIndex = findIndex(event);
+  var downvote = event.target.closest('.main__container__footer__img-downvote');
+
+  if (event.target == downvote) {
+    if (downvote) {
+      if (ideaArray[cardIndex].quality <= 1) {
+        return;
+      } else {
+        ideaArray[cardIndex].quality -= 1;
+        ideaArray[cardIndex].saveToStorage(ideaArray);
+        qualityTextChange(ideaArray[cardIndex].quality, event);
+        // persist();
+      }
+    }
   }
 }
 
@@ -196,6 +221,18 @@ function editCardP(classY, event) {
   if (event.target.closest(classY)) {
     ideaArray[cardIndex].body = event.target.innerText;
     ideaArray[cardIndex].saveToStorage(ideaArray);
+  }
+}
+
+function qualityTextChange(quality, event) {
+  console.log(quality);
+  var q = event.target;
+  if (q) {
+    event.target.parentNode.children[1].innerText = `Quality: ${
+      qualities[quality - 1]
+    }`;
+  } else {
+    return;
   }
 }
 
