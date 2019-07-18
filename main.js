@@ -69,6 +69,7 @@ function reassignClass() {
 
 function appendCard(idea) {
   var s = idea.star ? 'images/star-active.svg' : 'images/star.svg';
+
   main.insertAdjacentHTML(
     'afterbegin',
     `<container class="main__container" data-id="${idea.id}">
@@ -92,7 +93,9 @@ function appendCard(idea) {
       src="images/upvote.svg"
       alt="increase quality"
     />
-    <p class="main__container__footer__p">Quality: Swill</p>
+    <p class="main__container__footer__p">Quality: ${
+      qualities[idea.quality - 1]
+    }</p>
     <img
       class="main__container__footer__img-downvote"
       src="images/downvote.svg"
@@ -164,15 +167,16 @@ function starIt(event) {
 function upvote(event) {
   var cardIndex = findIndex(event);
   var upvote = event.target.closest('.main__container__footer__img-upvote');
-  // var q = qualities[cardIndex].quality;
+
   if (event.target == upvote) {
     if (upvote) {
-      if (ideaArray[cardIndex].quality > qualities.length - 1) {
+      if (ideaArray[cardIndex].quality >= qualities.length) {
         return;
       } else {
-        console.log('before: ', ideaArray[cardIndex].quality);
         ideaArray[cardIndex].quality += 1;
-        console.log('after: ', ideaArray[cardIndex].quality);
+        ideaArray[cardIndex].saveToStorage(ideaArray);
+        qualityTextChange(ideaArray[cardIndex].quality, event);
+        // persist();
       }
     }
   }
@@ -181,15 +185,16 @@ function upvote(event) {
 function downvote(event) {
   var cardIndex = findIndex(event);
   var downvote = event.target.closest('.main__container__footer__img-downvote');
-  // var q = qualities[cardIndex].quality;
+
   if (event.target == downvote) {
     if (downvote) {
-      if (ideaArray[cardIndex].quality <= 0) {
+      if (ideaArray[cardIndex].quality <= 1) {
         return;
       } else {
-        console.log('before: ', ideaArray[cardIndex].quality);
         ideaArray[cardIndex].quality -= 1;
-        console.log('after: ', ideaArray[cardIndex].quality);
+        ideaArray[cardIndex].saveToStorage(ideaArray);
+        qualityTextChange(ideaArray[cardIndex].quality, event);
+        // persist();
       }
     }
   }
@@ -216,6 +221,18 @@ function editCardP(classY, event) {
   if (event.target.closest(classY)) {
     ideaArray[cardIndex].body = event.target.innerText;
     ideaArray[cardIndex].saveToStorage(ideaArray);
+  }
+}
+
+function qualityTextChange(quality, event) {
+  console.log(quality);
+  var q = event.target;
+  if (q) {
+    event.target.parentNode.children[1].innerText = `Quality: ${
+      qualities[quality - 1]
+    }`;
+  } else {
+    return;
   }
 }
 
