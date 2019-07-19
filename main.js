@@ -131,7 +131,10 @@ function clearInput(input) {
 }
 
 function findID(event) {
-  return parseInt(event.target.closest('.main__container').dataset.id);
+  var container = event.target.closest('.main__container');
+  if (ideaArray.length > 0 && container) {
+    return parseInt(event.target.closest('.main__container').dataset.id);
+  }
 }
 
 function findIndex(event) {
