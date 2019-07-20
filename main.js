@@ -3,6 +3,7 @@ var qualities = ['Swill', 'Plausible', 'Genius'];
 var titleInput = document.querySelector('.section__form__input-title');
 var bodyInput = document.querySelector('.section__form__input-body');
 var saveButton = document.querySelector('.section__form__div__button');
+var searchIdeas = document.querySelector('.section__form__div__input-search');
 var main = document.querySelector('.main');
 
 // Functions on page load
@@ -13,6 +14,7 @@ persist();
 
 // Event Listeners
 saveButton.addEventListener('click', saveHandler);
+searchIdeas.addEventListener('keyup', searchFilter);
 main.addEventListener('click', mainHandler);
 main.addEventListener('keyup', function() {
   editCardTitle('.main__container__h3', event);
@@ -128,6 +130,28 @@ function enableSaveButton() {
 
 function clearInput(input) {
   input.value = '';
+}
+
+function searchFilter(event) {
+  var searchBox = event.target
+    .closest('.section__form__div__input-search')
+    .value.toLowerCase();
+  var results = ideaArray.filter(function(word) {
+    return (
+      word.title.toLowerCase().includes(searchBox) ||
+      word.body.toLowerCase().includes(searchBox)
+    );
+  });
+  main.innerHTML = '';
+  results.map(function(word) {
+    appendCard(word);
+  });
+  // if (event.target == searchBox) {
+  //   for (var i = 0; i < ideaArray.length; i++) {
+  //     var result = ideaArray.filter(word => word.title.includes(searchBox));
+  //   }
+  //   console.log(result);
+  // }
 }
 
 function findID(event) {
