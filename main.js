@@ -5,6 +5,9 @@ var bodyInput = document.querySelector('.section__form__input-body');
 var saveButton = document.querySelector('.section__form__div__button');
 var searchIdeas = document.querySelector('.section__form__div__input-search');
 var main = document.querySelector('.main');
+var swill = document.querySelector('#swill');
+var plausible = document.querySelector('#plausible');
+var genius = document.querySelector('#genius');
 
 // Functions on page load
 // promptIdea();
@@ -22,13 +25,22 @@ main.addEventListener('keyup', function() {
 });
 titleInput.addEventListener('keyup', enableSaveButton);
 bodyInput.addEventListener('keyup', enableSaveButton);
+swill.addEventListener('click', function() {
+  filter(1);
+});
+plausible.addEventListener('click', function() {
+  filter(2);
+});
+genius.addEventListener('click', function() {
+  filter(3);
+});
 
 function saveHandler(event) {
   event.preventDefault();
   newIdea();
-  // promptIdea();
   clearInput(titleInput);
   clearInput(bodyInput);
+  // promptIdea();
 }
 
 function mainHandler(event) {
@@ -39,6 +51,7 @@ function mainHandler(event) {
   starIt(event);
   upvote(event);
   downvote(event);
+  // promptIdea();
 }
 
 function newIdea() {
@@ -108,19 +121,18 @@ function appendCard(idea) {
   );
 }
 
-// function promptIdea() {
-//   if (ideaArray.length === 0) {
-//     main.insertAdjacentHTML(
-//       'afterbegin',
-//       `<p class= main__p-idea-prompt>Give Ideas!</p>`
-//     );
-//   } else if (ideaArray.length > 1) {
-//     return;
-//   } else {
-//     var prompt = document.querySelector('.main__p-idea-prompt');
-//     prompt.remove();
-//   }
-// }
+function promptIdea() {
+  if (ideaArray.length === 0) {
+    main.insertAdjacentHTML(
+      'afterbegin',
+      `<p class=main__p-idea-prompt>Please create an idea!</p>`
+    );
+  }
+    if(ideaArray.length === 1) {
+    var prompt = document.querySelector('.main__p-idea-prompt');
+    prompt.remove();
+  }
+}
 
 function enableSaveButton() {
   if (titleInput.value !== '' && bodyInput.value !== '') {
@@ -265,4 +277,10 @@ function qualityTextChange(quality, event) {
 
 function persist() {
   ideaArray.map(anIdea => appendCard(anIdea));
+}
+
+function filter(qualities) {
+    main.innerHTML = '';
+    var qualityArray = ideaArray.filter(idea => idea.quality === qualities);
+    qualityArray.map(filteredIdeas => appendCard(filteredIdeas));
 }
