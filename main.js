@@ -11,12 +11,17 @@ var main = document.querySelector('.main');
 reassignClass();
 spliceOnLoad();
 persist();
-
+console.log(ideaArray)
 // Event Listeners
 saveButton.addEventListener('click', saveHandler);
 searchIdeas.addEventListener('keyup', searchFilter);
 main.addEventListener('click', mainHandler);
-main.addEventListener('keyup', function() {
+main.addEventListener('keydown', function(event) {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+    document.getElementById("main__container__p").blur();
+    document.getElementById("main__container__h3").blur();
+  }
   editCardTitle('.main__container__h3', event);
   editCardP('.main__container__p', event);
 });
@@ -45,7 +50,7 @@ function newIdea() {
   var idea = new Idea(Date.now(), titleInput.value, bodyInput.value);
   ideaArray.push(idea);
   idea.saveToStorage(ideaArray);
-  console.log(ideaArray);
+  // console.log(ideaArray);
   appendCard(idea);
 }
 
@@ -87,8 +92,8 @@ function appendCard(idea) {
       alt="delete button"
     />
   </header>
-  <h3 class="main__container__h3" contenteditable="true">${idea.title}</h3>
-  <p class="main__container__p" contenteditable="true">${idea.body}</p>
+  <h3 class="main__container__h3" id="main__container__h3" contenteditable="true">${idea.title}</h3>
+  <p class="main__container__p" id="main__container__p" contenteditable="true">${idea.body}</p>
   <footer class="main__container__footer">
     <img
       class="main__container__footer__img-upvote"
@@ -252,7 +257,6 @@ function editCardP(classY, event) {
 }
 
 function qualityTextChange(quality, event) {
-  console.log(quality);
   var q = event.target;
   if (q) {
     event.target.parentNode.children[1].innerText = `Quality: ${
