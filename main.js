@@ -6,6 +6,10 @@ var saveButton = document.querySelector('.section__form__div__button');
 var searchIdeas = document.querySelector('.section__form__div__input-search');
 var emptyIdea = document.querySelector('.idea-empty');
 var main = document.querySelector('.main');
+var swill = document.querySelector('#swill');
+var plausible = document.querySelector('#plausible');
+var genius = document.querySelector('#genius');
+var searchBox = document.querySelector('.section__form__div__input-search');
 
 // Functions on page load
 reassignClass();
@@ -15,7 +19,10 @@ promptIdea();
 
 // Event Listeners
 saveButton.addEventListener('click', saveHandler);
-searchIdeas.addEventListener('keyup', searchFilter);
+searchIdeas.addEventListener('keyup', function() {
+  searchFilter(ideaArray);
+  searchFilter(qualityArray);
+});
 main.addEventListener('click', mainHandler);
 main.addEventListener('keydown', function(event) {
   if (event.keyCode === 13) {
@@ -31,12 +38,25 @@ main.addEventListener('keydown', function(event) {
 });
 titleInput.addEventListener('keyup', enableSaveButton);
 bodyInput.addEventListener('keyup', enableSaveButton);
+swill.addEventListener('click', function() {
+  searchBox.value = '';
+  filter(1);
+});
+plausible.addEventListener('click', function() {
+  searchBox.value = '';
+  filter(2);
+});
+genius.addEventListener('click', function() {
+  searchBox.value = '';
+  filter(3);
+});
 
 function saveHandler(event) {
   event.preventDefault();
   newIdea();
   clearInput(titleInput);
   clearInput(bodyInput);
+  promptIdea();
   saveButton.disabled = true;
 }
 
@@ -48,6 +68,7 @@ function mainHandler(event) {
   starIt(event);
   upvote(event);
   downvote(event);
+  promptIdea();
 }
 
 function newIdea() {
@@ -139,14 +160,12 @@ function clearInput(input) {
   input.value = '';
 }
 
-function searchFilter(event) {
-  var searchBox = event.target
-    .closest('.section__form__div__input-search')
-    .value.toLowerCase();
-  var results = ideaArray.filter(function(word) {
+function searchFilter(array) {
+  var search = searchBox.value.toLowerCase();
+  var results = array.filter(function(word) {
     return (
-      word.title.toLowerCase().includes(searchBox) ||
-      word.body.toLowerCase().includes(searchBox)
+      word.title.toLowerCase().includes(search) ||
+      word.body.toLowerCase().includes(search)
     );
   });
   main.innerHTML = '';
@@ -154,6 +173,7 @@ function searchFilter(event) {
     appendCard(word);
   });
 }
+
 
 function findID(event) {
   var container = event.target.closest('.main__container');
@@ -264,4 +284,10 @@ function qualityTextChange(quality, event) {
 
 function persist() {
   ideaArray.map(anIdea => appendCard(anIdea));
+}
+
+function filter(qualities) {
+    main.innerHTML = '';
+    qualityArray = ideaArray.filter(idea => idea.quality === qualities);
+    qualityArray.map(filteredIdeas => appendCard(filteredIdeas));
 }
