@@ -19,8 +19,11 @@ main.addEventListener('click', mainHandler);
 main.addEventListener('keydown', function(event) {
   if (event.keyCode === 13) {
     event.preventDefault();
-    document.getElementById("main__container__p").blur();
-    document.getElementById("main__container__h3").blur();
+    if (event.target.closest('.main__container__h3')){
+      event.target.closest('.main__container__h3').blur();
+    } else if (event.target.closest('.main__container__p')){
+      event.target.closest('.main__container__p').blur();
+    }
   }
   editCardTitle('.main__container__h3', event);
   editCardP('.main__container__p', event);
@@ -34,6 +37,7 @@ function saveHandler(event) {
   // promptIdea();
   clearInput(titleInput);
   clearInput(bodyInput);
+  saveButton.disabled = true;
 }
 
 function mainHandler(event) {
@@ -259,9 +263,7 @@ function editCardP(classY, event) {
 function qualityTextChange(quality, event) {
   var q = event.target;
   if (q) {
-    event.target.parentNode.children[1].innerText = `Quality: ${
-      qualities[quality - 1]
-    }`;
+    event.target.parentNode.children[1].innerText = `Quality: ${qualities[quality - 1]}`;
   } else {
     return;
   }
