@@ -8,30 +8,45 @@ var main = document.querySelector('.main');
 var swill = document.querySelector('#swill');
 var plausible = document.querySelector('#plausible');
 var genius = document.querySelector('#genius');
+var searchBox = document.querySelector('.section__form__div__input-search');
 
 // Functions on page load
-// promptIdea();
+promptIdea();
 reassignClass();
 spliceOnLoad();
 persist();
-
+console.log(ideaArray)
 // Event Listeners
 saveButton.addEventListener('click', saveHandler);
-searchIdeas.addEventListener('keyup', searchFilter);
+searchIdeas.addEventListener('keyup', function() {
+  searchFilter(ideaArray);
+  searchFilter(qualityArray);
+});
 main.addEventListener('click', mainHandler);
-main.addEventListener('keyup', function() {
+main.addEventListener('keydown', function(event) {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+    if (event.target.closest('.main__container__h3')){
+      event.target.closest('.main__container__h3').blur();
+    } else if (event.target.closest('.main__container__p')){
+      event.target.closest('.main__container__p').blur();
+    }
+  }
   editCardTitle('.main__container__h3', event);
   editCardP('.main__container__p', event);
 });
 titleInput.addEventListener('keyup', enableSaveButton);
 bodyInput.addEventListener('keyup', enableSaveButton);
 swill.addEventListener('click', function() {
+  searchBox.value = '';
   filter(1);
 });
 plausible.addEventListener('click', function() {
+  searchBox.value = '';
   filter(2);
 });
 genius.addEventListener('click', function() {
+  searchBox.value = '';
   filter(3);
 });
 
@@ -40,7 +55,8 @@ function saveHandler(event) {
   newIdea();
   clearInput(titleInput);
   clearInput(bodyInput);
-  // promptIdea();
+  promptIdea();
+  saveButton.disabled = true;
 }
 
 function mainHandler(event) {
@@ -51,14 +67,14 @@ function mainHandler(event) {
   starIt(event);
   upvote(event);
   downvote(event);
-  // promptIdea();
+  promptIdea();
 }
 
 function newIdea() {
   var idea = new Idea(Date.now(), titleInput.value, bodyInput.value);
   ideaArray.push(idea);
   idea.saveToStorage(ideaArray);
-  console.log(ideaArray);
+  // console.log(ideaArray);
   appendCard(idea);
 }
 
@@ -100,8 +116,8 @@ function appendCard(idea) {
       alt="delete button"
     />
   </header>
-  <h3 class="main__container__h3" contenteditable="true">${idea.title}</h3>
-  <p class="main__container__p" contenteditable="true">${idea.body}</p>
+  <h3 class="main__container__h3" id="main__container__h3" contenteditable="true">${idea.title}</h3>
+  <p class="main__container__p" id="main__container__p" contenteditable="true">${idea.body}</p>
   <footer class="main__container__footer">
     <img
       class="main__container__footer__img-upvote"
@@ -144,27 +160,19 @@ function clearInput(input) {
   input.value = '';
 }
 
-function searchFilter(event) {
-  var searchBox = event.target
-    .closest('.section__form__div__input-search')
-    .value.toLowerCase();
-  var results = ideaArray.filter(function(word) {
+function searchFilter(array) {
+  var search = searchBox.value.toLowerCase();
+  var results = array.filter(function(word) {
     return (
-      word.title.toLowerCase().includes(searchBox) ||
-      word.body.toLowerCase().includes(searchBox)
+      word.title.toLowerCase().includes(search) ||
+      word.body.toLowerCase().includes(search)
     );
   });
   main.innerHTML = '';
   results.map(function(word) {
     appendCard(word);
-  });
-  // if (event.target == searchBox) {
-  //   for (var i = 0; i < ideaArray.length; i++) {
-  //     var result = ideaArray.filter(word => word.title.includes(searchBox));
-  //   }
-  //   console.log(result);
-  // }
-}
+  })
+};
 
 function findID(event) {
   var container = event.target.closest('.main__container');
@@ -264,12 +272,9 @@ function editCardP(classY, event) {
 }
 
 function qualityTextChange(quality, event) {
-  console.log(quality);
   var q = event.target;
   if (q) {
-    event.target.parentNode.children[1].innerText = `Quality: ${
-      qualities[quality - 1]
-    }`;
+    event.target.parentNode.children[1].innerText = `Quality: ${qualities[quality - 1]}`;
   } else {
     return;
   }
@@ -281,6 +286,6 @@ function persist() {
 
 function filter(qualities) {
     main.innerHTML = '';
-    var qualityArray = ideaArray.filter(idea => idea.quality === qualities);
+    qualityArray = ideaArray.filter(idea => idea.quality === qualities);
     qualityArray.map(filteredIdeas => appendCard(filteredIdeas));
 }
