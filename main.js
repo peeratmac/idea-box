@@ -4,14 +4,15 @@ var titleInput = document.querySelector('.section__form__input-title');
 var bodyInput = document.querySelector('.section__form__input-body');
 var saveButton = document.querySelector('.section__form__div__button');
 var searchIdeas = document.querySelector('.section__form__div__input-search');
+var emptyIdea = document.querySelector('.idea-empty');
 var main = document.querySelector('.main');
 
 // Functions on page load
-// promptIdea();
 reassignClass();
 spliceOnLoad();
 persist();
-console.log(ideaArray)
+promptIdea();
+
 // Event Listeners
 saveButton.addEventListener('click', saveHandler);
 searchIdeas.addEventListener('keyup', searchFilter);
@@ -19,9 +20,9 @@ main.addEventListener('click', mainHandler);
 main.addEventListener('keydown', function(event) {
   if (event.keyCode === 13) {
     event.preventDefault();
-    if (event.target.closest('.main__container__h3')){
+    if (event.target.closest('.main__container__h3')) {
       event.target.closest('.main__container__h3').blur();
-    } else if (event.target.closest('.main__container__p')){
+    } else if (event.target.closest('.main__container__p')) {
       event.target.closest('.main__container__p').blur();
     }
   }
@@ -34,7 +35,6 @@ bodyInput.addEventListener('keyup', enableSaveButton);
 function saveHandler(event) {
   event.preventDefault();
   newIdea();
-  // promptIdea();
   clearInput(titleInput);
   clearInput(bodyInput);
   saveButton.disabled = true;
@@ -54,7 +54,6 @@ function newIdea() {
   var idea = new Idea(Date.now(), titleInput.value, bodyInput.value);
   ideaArray.push(idea);
   idea.saveToStorage(ideaArray);
-  // console.log(ideaArray);
   appendCard(idea);
 }
 
@@ -96,8 +95,12 @@ function appendCard(idea) {
       alt="delete button"
     />
   </header>
-  <h3 class="main__container__h3" id="main__container__h3" contenteditable="true">${idea.title}</h3>
-  <p class="main__container__p" id="main__container__p" contenteditable="true">${idea.body}</p>
+  <h3 class="main__container__h3" id="main__container__h3" contenteditable="true">${
+    idea.title
+  }</h3>
+  <p class="main__container__p" id="main__container__p" contenteditable="true">${
+    idea.body
+  }</p>
   <footer class="main__container__footer">
     <img
       class="main__container__footer__img-upvote"
@@ -115,21 +118,16 @@ function appendCard(idea) {
   </footer>
 </container>`
   );
+  promptIdea();
 }
 
-// function promptIdea() {
-//   if (ideaArray.length === 0) {
-//     main.insertAdjacentHTML(
-//       'afterbegin',
-//       `<p class= main__p-idea-prompt>Give Ideas!</p>`
-//     );
-//   } else if (ideaArray.length > 1) {
-//     return;
-//   } else {
-//     var prompt = document.querySelector('.main__p-idea-prompt');
-//     prompt.remove();
-//   }
-// }
+function promptIdea() {
+  if (ideaArray.length > 0) {
+    emptyIdea.classList.add('hidden');
+  } else {
+    emptyIdea.classList.remove('hidden');
+  }
+}
 
 function enableSaveButton() {
   if (titleInput.value !== '' && bodyInput.value !== '') {
@@ -155,12 +153,6 @@ function searchFilter(event) {
   results.map(function(word) {
     appendCard(word);
   });
-  // if (event.target == searchBox) {
-  //   for (var i = 0; i < ideaArray.length; i++) {
-  //     var result = ideaArray.filter(word => word.title.includes(searchBox));
-  //   }
-  //   console.log(result);
-  // }
 }
 
 function findID(event) {
@@ -212,7 +204,6 @@ function upvote(event) {
         ideaArray[cardIndex].quality += 1;
         ideaArray[cardIndex].updateQuality(ideaArray);
         qualityTextChange(ideaArray[cardIndex].quality, event);
-        // persist();
       }
     }
   }
@@ -230,7 +221,6 @@ function downvote(event) {
         ideaArray[cardIndex].quality -= 1;
         ideaArray[cardIndex].updateQuality(ideaArray);
         qualityTextChange(ideaArray[cardIndex].quality, event);
-        // persist();
       }
     }
   }
@@ -242,6 +232,7 @@ function deleteCard(event) {
     event.target.closest('.main__container').remove();
     ideaArray[cardIndex].deleteFromStorage(cardIndex);
   }
+  promptIdea();
 }
 
 function editCardTitle(classX, event) {
@@ -263,7 +254,9 @@ function editCardP(classY, event) {
 function qualityTextChange(quality, event) {
   var q = event.target;
   if (q) {
-    event.target.parentNode.children[1].innerText = `Quality: ${qualities[quality - 1]}`;
+    event.target.parentNode.children[1].innerText = `Quality: ${
+      qualities[quality - 1]
+    }`;
   } else {
     return;
   }
