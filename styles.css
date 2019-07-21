@@ -44,7 +44,7 @@ body {
 }
 
 .aside__button-large:hover {
-  background-color: #A9AAD2;
+  background-color: #a9aad2;
 }
 
 .aside__div {
@@ -66,23 +66,22 @@ body {
   border: none;
   /* margin-bottom: 30px; */
   color: #fff;
-  background-color: #1F1F3D;
+  background-color: #1f1f3d;
   padding-left: 20px;
   cursor: pointer;
   font-size: 1.2em;
   height: 30px;
 }
 
-
 .aside__button-quality:hover {
-  background-color: #D1421A;
+  background-color: #d1421a;
 }
 
 /* .aside__button-quality:hover:before {
   background-color: red;
 } */
 
-.aside__input{
+.aside__input {
   width: 90%;
   display: block;
   margin: auto;
@@ -142,7 +141,7 @@ body {
   border: 1px solid #9092C4;
   border-left: none;
   padding: 10px;
-  font-size: .8em;
+  font-size: 0.8em;
 }
 
 .section__form__div__button {
@@ -160,7 +159,7 @@ body {
 }
 
 .section__form__div__button:hover {
-  background-color: #5355A4;
+  background-color: #5355a4;
   box-shadow: 1.5px 1.5px grey;
 }
 
@@ -188,7 +187,7 @@ body {
 
 .main__container:hover {
   /* box-shadow: 5px 5px 5px 5px #A9AAD2; */
-  box-shadow: 0 4px 8px 0 #A9AAD2, 0 6px 20px 1px #A9AAD2;
+  box-shadow: 0 4px 8px 0 #a9aad2, 0 6px 20px 1px #a9aad2;
 }
 
 .main__container__header {
@@ -240,6 +239,25 @@ body {
 .main__container__footer__img-upvote:hover,
 .main__container__footer__img-downvote:hover {
   transform: scale(1.2);
+}
+
+.idea-img {
+  height: 150px;
+  width: 150px;
+}
+
+.idea-empty {
+  display: flex;
+  color: #1f1f3d;
+  font-size: 50px;
+  font-weight: 800;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.hidden {
+  display: none;
 }
 
 img {
