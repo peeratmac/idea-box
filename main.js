@@ -62,7 +62,7 @@ function saveHandler(event) {
 
 function mainHandler(event) {
   findIndex(event);
-  deleteCard(event);
+  deleteCardAnimation(event);
   editCardTitle('.main__container__h3', event);
   editCardP('.main__container__p', event);
   starIt(event);
@@ -246,14 +246,24 @@ function downvote(event) {
   }
 }
 
+function deleteCardAnimation(event) {
+  var cardIndex = findIndex(event);
+  if (event.target.closest('.main__container__header__img-delete')) {
+    var deleteAnimation = event.target.closest('.main__container');
+    deleteAnimation.classList.add('delete');
+    deleteCard(event)
+  }
+}
+
 function deleteCard(event) {
   var cardIndex = findIndex(event);
   if (event.target.closest('.main__container__header__img-delete')) {
-    event.target.closest('.main__container').remove();
+    // event.target.closest('.main__container').remove();
     ideaArray[cardIndex].deleteFromStorage(cardIndex);
   }
   promptIdea();
 }
+
 
 function editCardTitle(classX, event) {
   var cardIndex = findIndex(event);
