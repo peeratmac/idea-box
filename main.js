@@ -295,6 +295,7 @@ function filter(qualities) {
     main.innerHTML = '';
     qualityArray = ideaArray.filter(idea => idea.quality === qualities);
     qualityArray.map(filteredIdeas => appendCard(filteredIdeas));
+    starredIdeasButton.innerHTML = 'View All Ideas';
 }
 
 function starredCards() {
