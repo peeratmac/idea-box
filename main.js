@@ -10,6 +10,7 @@ var swill = document.querySelector('#swill');
 var plausible = document.querySelector('#plausible');
 var genius = document.querySelector('#genius');
 var searchBox = document.querySelector('.section__form__div__input-search');
+var starredIdeasButton = document.querySelector('#starred-ideas');
 
 // Functions on page load
 reassignClass();
@@ -50,6 +51,7 @@ genius.addEventListener('click', function() {
   searchBox.value = '';
   filter(3);
 });
+starredIdeasButton.addEventListener('click', starHandler);
 
 function saveHandler(event) {
   event.preventDefault();
@@ -69,6 +71,12 @@ function mainHandler(event) {
   upvote(event);
   downvote(event);
   promptIdea();
+}
+
+function starHandler() {
+  searchBox.value = '';
+  starredCards();
+  toggleStarText(); 
 }
 
 function newIdea() {
@@ -290,4 +298,20 @@ function filter(qualities) {
     main.innerHTML = '';
     qualityArray = ideaArray.filter(idea => idea.quality === qualities);
     qualityArray.map(filteredIdeas => appendCard(filteredIdeas));
+    starredIdeasButton.innerHTML = 'View All Ideas';
+}
+
+function starredCards() {
+  main.innerHTML = '';
+  starArray = ideaArray.filter(idea => idea.star === true);
+  starArray.map(starred => appendCard(starred));
+}
+
+function toggleStarText() {
+  if(starredIdeasButton.innerHTML === 'Show Starred Ideas') {
+  starredIdeasButton.innerHTML = 'View All Ideas';
+  } else {
+    starredIdeasButton.innerHTML = 'Show Starred Ideas';
+    persist();
+  }
 }
