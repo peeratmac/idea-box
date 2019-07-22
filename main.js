@@ -1,5 +1,8 @@
+// Global Variables
 var ideaArray = JSON.parse(localStorage.getItem('ideaObj')) || [];
 var qualities = ['Swill', 'Plausible', 'Genius'];
+
+// Query Selectors
 var titleInput = document.querySelector('.section__form__input-title');
 var bodyInput = document.querySelector('.section__form__input-body');
 var saveButton = document.querySelector('.section__form__div__button');
@@ -24,33 +27,14 @@ searchIdeas.addEventListener('keyup', function() {
   searchFilter(ideaArray);
   searchFilter(qualityArray);
 });
-main.addEventListener('click', mainHandler);
-main.addEventListener('keydown', function(event) {
-  if (event.keyCode === 13) {
-    event.preventDefault();
-    if (event.target.closest('.main__container__h3')) {
-      event.target.closest('.main__container__h3').blur();
-    } else if (event.target.closest('.main__container__p')) {
-      event.target.closest('.main__container__p').blur();
-    }
-  }
-  editCardTitle('.main__container__h3', event);
-  editCardP('.main__container__p', event);
-});
+
 titleInput.addEventListener('keyup', enableSaveButton);
 bodyInput.addEventListener('keyup', enableSaveButton);
-swill.addEventListener('click', function() {
-  searchBox.value = '';
-  filter(1);
-});
-plausible.addEventListener('click', function() {
-  searchBox.value = '';
-  filter(2);
-});
-genius.addEventListener('click', function() {
-  searchBox.value = '';
-  filter(3);
-});
+main.addEventListener('click', mainHandler);
+main.addEventListener('keydown', enterEvent);
+swill.addEventListener('click', filterSwill);
+plausible.addEventListener('click', filterPlausible);
+genius.addEventListener('click', filterGenius);
 starredIdeasButton.addEventListener('click', starHandler);
 
 function saveHandler(event) {
@@ -70,13 +54,42 @@ function mainHandler(event) {
   starIt(event);
   upvote(event);
   downvote(event);
+  enterEvent(event);
   promptIdea();
+}
+
+function enterEvent(event) {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+    if (event.target.closest('.main__container__h3')) {
+      event.target.closest('.main__container__h3').blur();
+    } else if (event.target.closest('.main__container__p')) {
+      event.target.closest('.main__container__p').blur();
+    }
+  }
+  editCardTitle('.main__container__h3', event);
+  editCardP('.main__container__p', event);
+}
+
+function filterSwill() {
+  searchBox.value = '';
+  filter(1);
+}
+
+function filterPlausible() {
+  searchBox.value = '';
+  filter(2);
+}
+
+function filterGenius() {
+  searchBox.value = '';
+  filter(3);
 }
 
 function starHandler() {
   searchBox.value = '';
   starredCards();
-  toggleStarText(); 
+  toggleStarText();
 }
 
 function newIdea() {
@@ -170,18 +183,17 @@ function clearInput(input) {
 
 function searchFilter(array) {
   var search = searchBox.value.toLowerCase();
-  var results = array.filter(function(word) {
+  var results = array.filter(function(cardObject) {
     return (
-      word.title.toLowerCase().includes(search) ||
-      word.body.toLowerCase().includes(search)
+      cardObject.title.toLowerCase().includes(search) ||
+      cardObject.body.toLowerCase().includes(search)
     );
   });
   main.innerHTML = '';
-  results.map(function(word) {
-    appendCard(word);
+  results.map(function(cardObject) {
+    appendCard(cardObject);
   });
 }
-
 
 function findID(event) {
   var container = event.target.closest('.main__container');
@@ -295,10 +307,10 @@ function persist() {
 }
 
 function filter(qualities) {
-    main.innerHTML = '';
-    qualityArray = ideaArray.filter(idea => idea.quality === qualities);
-    qualityArray.map(filteredIdeas => appendCard(filteredIdeas));
-    starredIdeasButton.innerHTML = 'View All Ideas';
+  main.innerHTML = '';
+  qualityArray = ideaArray.filter(idea => idea.quality === qualities);
+  qualityArray.map(filteredIdeas => appendCard(filteredIdeas));
+  starredIdeasButton.innerHTML = 'View All Ideas';
 }
 
 function starredCards() {
@@ -308,8 +320,8 @@ function starredCards() {
 }
 
 function toggleStarText() {
-  if(starredIdeasButton.innerHTML === 'Show Starred Ideas') {
-  starredIdeasButton.innerHTML = 'View All Ideas';
+  if (starredIdeasButton.innerHTML === 'Show Starred Ideas') {
+    starredIdeasButton.innerHTML = 'View All Ideas';
   } else {
     starredIdeasButton.innerHTML = 'Show Starred Ideas';
     persist();
