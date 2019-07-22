@@ -73,6 +73,7 @@ function mainHandler(event) {
 }
 
 function starHandler() {
+  searchBox.value = '';
   starredCards();
   toggleStarText(); 
 }
@@ -300,7 +301,7 @@ function filter(qualities) {
 
 function starredCards() {
   main.innerHTML = '';
-  var starArray = ideaArray.filter(idea => idea.star === true);
+  starArray = ideaArray.filter(idea => idea.star === true);
   starArray.map(starred => appendCard(starred));
 }
 
