@@ -163,17 +163,13 @@ function clearInput(input) {
 function searchFilter(array) {
   var search = searchBox.value.toLowerCase();
   var results = array.filter(function(word) {
-    return (
-      word.title.toLowerCase().includes(search) ||
-      word.body.toLowerCase().includes(search)
-    );
+    return ( word.title.toLowerCase().includes(search) || word.body.toLowerCase().includes(search));
   });
   main.innerHTML = '';
   results.map(function(word) {
     appendCard(word);
   });
 }
-
 
 function findID(event) {
   var container = event.target.closest('.main__container');
@@ -251,18 +247,13 @@ function deleteCardAnimation(event) {
   if (event.target.closest('.main__container__header__img-delete')) {
     var deleteAnimation = event.target.closest('.main__container');
     deleteAnimation.classList.add('delete');
-    deleteCard(event)
+    ideaArray[cardIndex].deleteFromStorage(cardIndex);
+    setTimeout(function(){event.target.closest('.delete').remove()}, 450);
+    setTimeout(promptIdea(), 700);
   }
 }
 
-function deleteCard(event) {
-  var cardIndex = findIndex(event);
-  if (event.target.closest('.main__container__header__img-delete')) {
-    // event.target.closest('.main__container').remove();
-    ideaArray[cardIndex].deleteFromStorage(cardIndex);
-  }
-  promptIdea();
-}
+
 
 
 function editCardTitle(classX, event) {
