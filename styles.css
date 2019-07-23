@@ -3,6 +3,10 @@
   font-family: 'Open Sans', sans-serif;
 }
 
+.burger {
+  display: none;
+}
+
 body {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -19,13 +23,14 @@ body {
 .aside {
   background-color: #1f1f3d;
   grid-area: aside;
+  min-width: 300px;
 }
 
 .aside__h1 {
   color: #fff;
   font-size: 2em;
   font-family: 'Open Sans';
-  border-bottom: 1px solid #353567;;
+  border-bottom: 1px solid #353567;
   padding: 20px;
 }
 
@@ -81,6 +86,12 @@ body {
   background-color: red;
 } */
 
+.active-button {
+  background-color: #d1421a;
+  border-left: 8px solid #f58d6f;
+  outline: none;
+}
+
 .aside__input {
   width: 90%;
   display: block;
@@ -103,13 +114,14 @@ body {
   margin: auto;
   height: 100%;
   width: 45%;
+  min-width: 300px;
 }
 
 .section__form__input-title {
   width: 100%;
   margin: 10px 0px;
   height: 40px;
-  border: 1px solid #9092C4;
+  border: 1px solid #9092c4;
   border-radius: 2px;
 }
 
@@ -117,7 +129,7 @@ body {
   width: 100%;
   margin: 10px 0px;
   height: 100px;
-  border: 1px solid #9092C4;
+  border: 1px solid #9092c4;
   border-radius: 2px;
 }
 
@@ -138,7 +150,7 @@ body {
 .section__form__div__input-search {
   width: 100%;
   border-radius: 0px 2px 2px 0px;
-  border: 1px solid #9092C4;
+  border: 1px solid #9092c4;
   border-left: none;
   padding: 10px;
   font-size: 0.8em;
@@ -215,7 +227,7 @@ body {
   color: #ffffff;
   display: flex;
   font-weight: 700;
-  font-size: .9em;
+  font-size: 0.9em;
   justify-content: space-between;
   align-items: center;
   height: 40px;
@@ -224,7 +236,7 @@ body {
 
 .main__p-idea-prompt {
   margin: 20px auto;
-  border: 2px dashed #A9AAD2;
+  border: 2px dashed #a9aad2;
   height: 300px;
   width: 30%;
   text-align: center;
@@ -266,6 +278,31 @@ img {
   cursor: pointer;
 }
 
-@media screen and (max-width: 900px) {
-  
+@media screen and (max-width: 930px) {
+  body {
+    display: block;
+  }
+
+  .burger {
+    background-color: #1f1f3d;
+    display: block;
+  }
+
+  .burger__h2 {
+    display: inline;
+    text-align: center;
+    color: #ffffff;
+  }
+
+  .aside {
+    display: none;
+  }
+
+  .section {
+    width: 100%;
+  }
+
+  .main {
+    width: 100%;
+  }
 }

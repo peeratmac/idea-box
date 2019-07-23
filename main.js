@@ -14,12 +14,16 @@ var plausible = document.querySelector('#plausible');
 var genius = document.querySelector('#genius');
 var searchBox = document.querySelector('.section__form__div__input-search');
 var starredIdeasButton = document.querySelector('#starred-ideas');
+var burgerMenu = document.querySelector('.burger-menu');
+var burgerClose = document.querySelector('.burger-menu-close');
+var burgerContent = document.querySelector('.burger__p');
 
 // Functions on page load
 reassignClass();
 spliceOnLoad();
 persist();
 promptIdea();
+toggleBurgerIcon();
 
 // Event Listeners
 saveButton.addEventListener('click', saveHandler);
@@ -32,10 +36,20 @@ titleInput.addEventListener('keyup', enableSaveButton);
 bodyInput.addEventListener('keyup', enableSaveButton);
 main.addEventListener('click', mainHandler);
 main.addEventListener('keydown', enterEvent);
-swill.addEventListener('click', filterSwill);
-plausible.addEventListener('click', filterPlausible);
-genius.addEventListener('click', filterGenius);
+swill.addEventListener('click', swillHandler);
+plausible.addEventListener('click', plausibleHandler);
+genius.addEventListener('click', geniusHandler);
 starredIdeasButton.addEventListener('click', starHandler);
+burgerMenu.addEventListener('click', function() {
+  openBurger();
+  toggleBurgerIcon2();
+  burgerClose.style.visibility = 'visible';
+});
+burgerClose.addEventListener('click', function() {
+  changeBurgerIconBack();
+  toggleBurgerIcon();
+  burgerMenu.style.visibility = 'visible';
+});
 
 function saveHandler(event) {
   event.preventDefault();
@@ -71,19 +85,34 @@ function enterEvent(event) {
   editCardP('.main__container__p', event);
 }
 
-function filterSwill() {
+function swillHandler() {
   searchBox.value = '';
   filter(1);
+  if (event.target === swill) {
+    swill.classList.add('active-button');
+    plausible.classList.remove('active-button');
+    genius.classList.remove('active-button');
+  }
 }
 
-function filterPlausible() {
+function plausibleHandler() {
   searchBox.value = '';
   filter(2);
+  if (event.target === plausible) {
+    plausible.classList.add('active-button');
+    swill.classList.remove('active-button');
+    genius.classList.remove('active-button');
+  }
 }
 
-function filterGenius() {
+function geniusHandler() {
   searchBox.value = '';
   filter(3);
+  if (event.target === genius) {
+    genius.classList.add('active-button');
+    swill.classList.remove('active-button');
+    plausible.classList.remove('active-button');
+  }
 }
 
 function starHandler() {
@@ -320,10 +349,49 @@ function starredCards() {
 }
 
 function toggleStarText() {
-  if (starredIdeasButton.innerHTML === 'Show Starred Ideas') {
+  if (starredIdeasButton.innerHTML == 'Show Starred Ideas') {
     starredIdeasButton.innerHTML = 'View All Ideas';
   } else {
     starredIdeasButton.innerHTML = 'Show Starred Ideas';
     persist();
   }
+}
+
+function openBurger() {
+  burgerContent.insertAdjacentHTML(
+    'afterbegin',
+    `<h2 class="aside__h2">Filter Starred Ideas</h2>
+      <button id="starred-ideas" class="aside__button aside__button-large">
+        Show Starred Ideas
+      </button>
+      <div class="aside__div">
+        <h2 class="aside__h2">Filter by Quality</h2>
+        <button id="swill" class="aside__button aside__button-quality">
+          Swill
+        </button>
+        <button id="plausible" class="aside__button aside__button-quality">
+          Plausible
+        </button>
+        <button id="genius" class="aside__button aside__button-quality">
+          Genius
+        </button>
+        <h2 class="aside__h2">New Quality</h2>
+        <input class="aside__input" type="text" />
+        <button type="submit" class="aside__button aside__button-large">
+          Add New Quality
+        </button>
+      </div>`
+  );
+}
+
+function toggleBurgerIcon() {
+  burgerClose.style.visibility = 'hidden';
+}
+
+function toggleBurgerIcon2() {
+  burgerMenu.style.visibility = 'hidden';
+}
+
+function changeBurgerIconBack() {
+  burgerContent.remove();
 }
