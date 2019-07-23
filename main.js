@@ -12,15 +12,11 @@ var searchIdeas = document.querySelector('.section__form__div__input-search');
 var emptyIdea = document.querySelector('.idea-empty');
 var main = document.querySelector('.main');
 var asideDiv = document.querySelector('.aside__div');
-// var swill = document.querySelector('#swill');
-// var plausible = document.querySelector('#plausible');
-// var genius = document.querySelector('#genius');
 var searchBox = document.querySelector('.section__form__div__input-search');
 var starredIdeasButton = document.querySelector('#starred-ideas');
 var burgerMenu = document.querySelector('.burger-menu');
 var burgerClose = document.querySelector('.burger-menu-close');
 var burgerContent = document.querySelector('.burger__p');
-var burgerBurger = document.querySelector('.burger-burger');
 var showMoreLess = document.querySelector('.show-more-less');
 
 // Functions on page load
@@ -32,20 +28,17 @@ setupBurgerMenu();
 
 // Event Listeners
 saveButton.addEventListener('click', saveHandler);
-searchIdeas.addEventListener('keyup', function() {
-  searchFilter();
-  // searchFilter(qualityArray); -- what does this do? why are we using qualityArray as an argument in searchFilter?
-});
-showMoreLess.addEventListener('click', toggleShow);
+searchIdeas.addEventListener('keyup', searchFilter);
+showMoreLess.addEventListener('click', show);
+showMoreLess1.addEventListener('click', show);
 titleInput.addEventListener('keyup', enableSaveButton);
 bodyInput.addEventListener('keyup', enableSaveButton);
 main.addEventListener('click', mainHandler);
 main.addEventListener('keydown', enterEvent);
 asideDiv.addEventListener('click', updateQualitySearch)
-// swill.addEventListener('click', swillHandler);
-// plausible.addEventListener('click', plausibleHandler);
-// genius.addEventListener('click', geniusHandler);
+asideDiv1.addEventListener('click', updateQualitySearch)
 starredIdeasButton.addEventListener('click', starHandler);
+starredIdeasButton1.addEventListener('click', starHandler);
 burgerMenu.addEventListener('click', toggleBurger);
 burgerClose.addEventListener('click', toggleBurger);
 
@@ -70,41 +63,12 @@ function mainHandler(event) {
   promptIdea();
 }
 
-function toggleShow() {
-  show();
-}
-
-function enterEvent(event) {
-  if (event.keyCode === 13) {
-    event.preventDefault();
-    if (event.target.closest('.main__container__h3')) {
-      event.target.closest('.main__container__h3').blur();
-    } else if (event.target.closest('.main__container__p')) {
-      event.target.closest('.main__container__p').blur();
-    }
-  }
-  editCardTitle('.main__container__h3', event);
-  editCardP('.main__container__p', event);
-}
-
-function updateQualitySearch(event) {
-  if (event.target.closest('#swill')){
-    qualitySearch = 1;
-    swillHandler(event);
-    searchFilter();
-  } else if (event.target.closest('#plausible')) {
-    qualitySearch = 2;
-    plausibleHandler(event);
-    searchFilter();
-  } else if (event.target.closest('#genius')) {
-    qualitySearch = 3;
-    geniusHandler(event);
-    searchFilter();
-  }
+function starHandler() {
+  toggleStarText();
+  searchFilter();
 }
 
 function swillHandler(event) {
-  // console.log(event)
   if (event.target.closest('.active-button')) {
     event.target.classList.remove('active-button');
     qualitySearch = 0;
@@ -137,19 +101,39 @@ function geniusHandler(event) {
   }
 }
 
-function starHandler() {
-  toggleStarText();
-  searchFilter();
-  // searchBox.value = '';
-  // starredCards();
+function enterEvent(event) {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+    if (event.target.closest('.main__container__h3')) {
+      event.target.closest('.main__container__h3').blur();
+    } else if (event.target.closest('.main__container__p')) {
+      event.target.closest('.main__container__p').blur();
+    }
+  }
+  editCardTitle('.main__container__h3', event);
+  editCardP('.main__container__p', event);
+}
+
+function updateQualitySearch(event) {
+  if (event.target.closest('#swill')){
+    qualitySearch = 1;
+    swillHandler(event);
+    searchFilter();
+  } else if (event.target.closest('#plausible')) {
+    qualitySearch = 2;
+    plausibleHandler(event);
+    searchFilter();
+  } else if (event.target.closest('#genius')) {
+    qualitySearch = 3;
+    geniusHandler(event);
+    searchFilter();
+  }
 }
 
 function newIdea() {
   var idea = new Idea(Date.now(), titleInput.value, bodyInput.value);
   ideaArray.push(idea);
   idea.saveToStorage(ideaArray);
-  // appendCard(idea);
-  // persist();
 }
 
 function remakeNewIdea(id, title, body, star, quality) {
@@ -241,10 +225,14 @@ function searchFilter() {
       (qualitySearch === 0 || cardObj.quality === qualitySearch) && 
       (cardObj.star === starSearch || starSearch === 0 ) );
   });
+  if (results.length === ideaArray.length) {
+    persist()
+  } else {
   main.innerHTML = '';
   results.map(function(cardObj) {
     appendCard(cardObj);
-  });
+    });
+  }
 }
 
 function findID(event) {
@@ -384,20 +372,15 @@ function filter(qualities) {
   starredIdeasButton.innerHTML = 'View All Ideas';
 }
 
-// function starredCards() {
-//   main.innerHTML = '';
-//   starArray = ideaArray.filter(idea => idea.star === true);
-//   starArray.map(starred => appendCard(starred));
-// }
-
 function toggleStarText() {
-  if (starredIdeasButton.innerHTML == 'Show Starred Ideas') {
+  if (starredIdeasButton.innerHTML === 'Show Starred Ideas' || starredIdeasButton1.innerHTML === 'Show Starred Ideas') {
     starredIdeasButton.innerHTML = 'View All Ideas';
+    starredIdeasButton1.innerHTML = 'View All Ideas';
     starSearch = true;
   } else {
     starredIdeasButton.innerHTML = 'Show Starred Ideas';
+    starredIdeasButton1.innerHTML = 'Show Starred Ideas';
     starSearch = 0;
-    // persist();
   }
 }
 
@@ -449,7 +432,9 @@ function setupBurgerMenu() {
       </button>
     </div>`
   );
-
+  asideDiv1 = document.querySelector('.aside__div');
+  starredIdeasButton1 = document.querySelector('#starred-ideas');
+  showMoreLess1 = document.querySelector('.show-more-less');
   toggleOff();
 }
 
