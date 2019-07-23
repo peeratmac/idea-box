@@ -1,6 +1,8 @@
 // Global Variables
 var ideaArray = JSON.parse(localStorage.getItem('ideaObj')) || [];
 var qualities = ['Swill', 'Plausible', 'Genius'];
+var qualitySearch = 0;
+var starSearch = 0;
 
 // Query Selectors
 var titleInput = document.querySelector('.section__form__input-title');
@@ -9,9 +11,10 @@ var saveButton = document.querySelector('.section__form__div__button');
 var searchIdeas = document.querySelector('.section__form__div__input-search');
 var emptyIdea = document.querySelector('.idea-empty');
 var main = document.querySelector('.main');
-var swill = document.querySelector('#swill');
-var plausible = document.querySelector('#plausible');
-var genius = document.querySelector('#genius');
+var asideDiv = document.querySelector('.aside__div');
+// var swill = document.querySelector('#swill');
+// var plausible = document.querySelector('#plausible');
+// var genius = document.querySelector('#genius');
 var searchBox = document.querySelector('.section__form__div__input-search');
 var starredIdeasButton = document.querySelector('#starred-ideas');
 var burgerMenu = document.querySelector('.burger-menu');
@@ -30,17 +33,18 @@ setupBurgerMenu();
 // Event Listeners
 saveButton.addEventListener('click', saveHandler);
 searchIdeas.addEventListener('keyup', function() {
-  searchFilter(ideaArray);
-  searchFilter(qualityArray);
+  searchFilter();
+  // searchFilter(qualityArray); -- what does this do? why are we using qualityArray as an argument in searchFilter?
 });
 showMoreLess.addEventListener('click', toggleShow);
 titleInput.addEventListener('keyup', enableSaveButton);
 bodyInput.addEventListener('keyup', enableSaveButton);
 main.addEventListener('click', mainHandler);
 main.addEventListener('keydown', enterEvent);
-swill.addEventListener('click', swillHandler);
-plausible.addEventListener('click', plausibleHandler);
-genius.addEventListener('click', geniusHandler);
+asideDiv.addEventListener('click', updateQualitySearch)
+// swill.addEventListener('click', swillHandler);
+// plausible.addEventListener('click', plausibleHandler);
+// genius.addEventListener('click', geniusHandler);
 starredIdeasButton.addEventListener('click', starHandler);
 burgerMenu.addEventListener('click', toggleBurger);
 burgerClose.addEventListener('click', toggleBurger);
@@ -83,40 +87,61 @@ function enterEvent(event) {
   editCardP('.main__container__p', event);
 }
 
-function swillHandler() {
-  searchBox.value = '';
-  filter(1);
-  if (event.target === swill) {
-    swill.classList.add('active-button');
-    plausible.classList.remove('active-button');
-    genius.classList.remove('active-button');
+function updateQualitySearch(event) {
+  if (event.target.closest('#swill')){
+    qualitySearch = 1;
+    swillHandler(event);
+    searchFilter();
+  } else if (event.target.closest('#plausible')) {
+    qualitySearch = 2;
+    plausibleHandler(event);
+    searchFilter();
+  } else if (event.target.closest('#genius')) {
+    qualitySearch = 3;
+    geniusHandler(event);
+    searchFilter();
   }
 }
 
-function plausibleHandler() {
-  searchBox.value = '';
-  filter(2);
-  if (event.target === plausible) {
-    plausible.classList.add('active-button');
-    swill.classList.remove('active-button');
-    genius.classList.remove('active-button');
+function swillHandler(event) {
+  // console.log(event)
+  if (event.target.closest('.active-button')) {
+    event.target.classList.remove('active-button');
+    qualitySearch = 0;
+  } else {
+    event.target.classList.add('active-button');
+    event.target.nextElementSibling.classList.remove('active-button');
+    event.target.nextElementSibling.nextElementSibling.classList.remove('active-button');
   }
 }
 
-function geniusHandler() {
-  searchBox.value = '';
-  filter(3);
-  if (event.target === genius) {
-    genius.classList.add('active-button');
-    swill.classList.remove('active-button');
-    plausible.classList.remove('active-button');
+function plausibleHandler(event) {
+  if (event.target.closest('.active-button')) {
+      event.target.classList.remove('active-button');
+      qualitySearch = 0;
+  } else {
+    event.target.classList.add('active-button');
+    event.target.previousElementSibling.classList.remove('active-button');
+    event.target.nextElementSibling.classList.remove('active-button');
+  }
+}
+
+function geniusHandler(event) {
+  if (event.target.closest('.active-button')) {
+    event.target.classList.remove('active-button');
+    qualitySearch = 0;
+  } else {
+    event.target.classList.add('active-button');
+    event.target.previousElementSibling.classList.remove('active-button');
+    event.target.previousElementSibling.previousElementSibling.classList.remove('active-button');
   }
 }
 
 function starHandler() {
-  searchBox.value = '';
-  starredCards();
   toggleStarText();
+  searchFilter();
+  // searchBox.value = '';
+  // starredCards();
 }
 
 function newIdea() {
@@ -209,17 +234,16 @@ function clearInput(input) {
   input.value = '';
 }
 
-function searchFilter(array) {
+function searchFilter() {
   var search = searchBox.value.toLowerCase();
-  var results = array.filter(function(cardObject) {
-    return (
-      cardObject.title.toLowerCase().includes(search) ||
-      cardObject.body.toLowerCase().includes(search)
-    );
+  var results = ideaArray.filter(function(cardObj) {
+    return ( (cardObj.title.toLowerCase().includes(search) || cardObj.body.toLowerCase().includes(search)) && 
+      (qualitySearch === 0 || cardObj.quality === qualitySearch) && 
+      (cardObj.star === starSearch || starSearch === 0 ) );
   });
   main.innerHTML = '';
-  results.map(function(cardObject) {
-    appendCard(cardObject);
+  results.map(function(cardObj) {
+    appendCard(cardObj);
   });
 }
 
@@ -360,18 +384,20 @@ function filter(qualities) {
   starredIdeasButton.innerHTML = 'View All Ideas';
 }
 
-function starredCards() {
-  main.innerHTML = '';
-  starArray = ideaArray.filter(idea => idea.star === true);
-  starArray.map(starred => appendCard(starred));
-}
+// function starredCards() {
+//   main.innerHTML = '';
+//   starArray = ideaArray.filter(idea => idea.star === true);
+//   starArray.map(starred => appendCard(starred));
+// }
 
 function toggleStarText() {
   if (starredIdeasButton.innerHTML == 'Show Starred Ideas') {
     starredIdeasButton.innerHTML = 'View All Ideas';
+    starSearch = true;
   } else {
     starredIdeasButton.innerHTML = 'Show Starred Ideas';
-    persist();
+    starSearch = 0;
+    // persist();
   }
 }
 
