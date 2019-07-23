@@ -28,7 +28,7 @@ body {
 
 .aside__h1 {
   color: #fff;
-  font-size: 2em;
+  font-size: 1.2em;
   font-family: 'Open Sans';
   border-bottom: 1px solid #353567;
   padding: 20px;
@@ -145,6 +145,7 @@ body {
   margin: 0px;
   height: 40px;
   border-radius: 2px 0px 0px 2px;
+  cursor: text;
 }
 
 .section__form__div__input-search {
@@ -278,20 +279,39 @@ img {
   cursor: pointer;
 }
 
+.main-color {
+  filter: brightness(35%);
+}
+
 @media screen and (max-width: 930px) {
   body {
     display: block;
+    padding-top: 50px;
   }
 
   .burger {
     background-color: #1f1f3d;
     display: block;
+    padding: 5px;
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    z-index: 10;
   }
 
   .burger__h2 {
-    display: inline;
+    display: block;
     text-align: center;
     color: #ffffff;
+    margin-top: -35px;
+    margin-bottom: 5px;
+  }
+
+  .burger__p {
+    background-color: #1F1F3D;
+    margin: 0px;
+    width: 100%;
+    z-index: 10;
   }
 
   .aside {
@@ -308,5 +328,15 @@ img {
 
   .hidden {
     display: none;
+  }
+
+  .main__container {
+    max-width: 300px;
+    min-width: 250px;
+    width: auto;
+  }
+
+  .aside__div {
+    margin-bottom: 0px;
   }
 }

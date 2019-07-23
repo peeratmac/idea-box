@@ -18,6 +18,7 @@ var burgerMenu = document.querySelector('.burger-menu');
 var burgerClose = document.querySelector('.burger-menu-close');
 var burgerContent = document.querySelector('.burger__p');
 var burgerBurger = document.querySelector('.burger-burger');
+var mainColor = document.querySelector('.main-color');
 
 // Functions on page load
 reassignClass();
@@ -363,12 +364,14 @@ function toggleOn() {
   burgerMenu.classList.add('hidden');
   burgerClose.classList.remove('hidden');
   burgerContent.classList.remove('hidden');
+  main.classList.add('main-color');
 }
 
 function toggleOff() {
   burgerClose.classList.add('hidden');
   burgerMenu.classList.remove('hidden');
   burgerContent.classList.add('hidden');
+  main.classList.remove('main-color');
 }
 
 function setupBurgerMenu() {
