@@ -99,35 +99,36 @@ function updateQualitySearch(event) {
 }
 
 function swillHandler(event) {
+  // console.log(event)
   if (event.target.closest('.active-button')) {
-    swill.classList.remove('active-button');
+    event.target.classList.remove('active-button');
     qualitySearch = 0;
   } else {
-    swill.classList.add('active-button');
-    plausible.classList.remove('active-button');
-    genius.classList.remove('active-button');
+    event.target.classList.add('active-button');
+    event.target.nextElementSibling.classList.remove('active-button');
+    event.target.nextElementSibling.nextElementSibling.classList.remove('active-button');
   }
 }
 
 function plausibleHandler(event) {
   if (event.target.closest('.active-button')) {
-      plausible.classList.remove('active-button');
+      event.target.classList.remove('active-button');
       qualitySearch = 0;
   } else {
-    plausible.classList.add('active-button');
-    swill.classList.remove('active-button');
-    genius.classList.remove('active-button');
+    event.target.classList.add('active-button');
+    event.target.previousElementSibling.classList.remove('active-button');
+    event.target.nextElementSibling.classList.remove('active-button');
   }
 }
 
 function geniusHandler(event) {
   if (event.target.closest('.active-button')) {
-    genius.classList.remove('active-button');
+    event.target.classList.remove('active-button');
     qualitySearch = 0;
   } else {
-    genius.classList.add('active-button');
-    swill.classList.remove('active-button');
-    plausible.classList.remove('active-button');
+    event.target.classList.add('active-button');
+    event.target.previousElementSibling.classList.remove('active-button');
+    event.target.previousElementSibling.previousElementSibling.classList.remove('active-button');
   }
 }
 
