@@ -2,7 +2,7 @@
 var ideaArray = JSON.parse(localStorage.getItem('ideaObj')) || [];
 var qualities = ['Swill', 'Plausible', 'Genius'];
 var qualitySearch = 0;
-var starSeach = 0;
+var starSearch = 0;
 
 // Query Selectors
 var titleInput = document.querySelector('.section__form__input-title');
@@ -237,7 +237,9 @@ function clearInput(input) {
 function searchFilter() {
   var search = searchBox.value.toLowerCase();
   var results = ideaArray.filter(function(cardObj) {
-    return ( (cardObj.title.toLowerCase().includes(search) || cardObj.body.toLowerCase().includes(search)) && (qualitySearch === 0 || cardObj.quality === qualitySearch) && (cardObj.star === starSeach || starSeach === 0 ) );
+    return ( (cardObj.title.toLowerCase().includes(search) || cardObj.body.toLowerCase().includes(search)) && 
+      (qualitySearch === 0 || cardObj.quality === qualitySearch) && 
+      (cardObj.star === starSearch || starSearch === 0 ) );
   });
   main.innerHTML = '';
   results.map(function(cardObj) {
@@ -372,10 +374,10 @@ function filter(qualities) {
 function toggleStarText() {
   if (starredIdeasButton.innerHTML == 'Show Starred Ideas') {
     starredIdeasButton.innerHTML = 'View All Ideas';
-    starSeach = true;
+    starSearch = true;
   } else {
     starredIdeasButton.innerHTML = 'Show Starred Ideas';
-    starSeach = 0;
+    starSearch = 0;
     // persist();
   }
 }
