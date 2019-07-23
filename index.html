@@ -11,6 +11,12 @@
     />
   </head>
   <body>
+    <div class="burger">
+      <img class="burger-menu" src="images/menu.svg" />
+      <img class="burger-menu-close" src="images/menu-close.svg" />
+      <h2 class="burger__h2">IdeaBox Redux</h2>
+      <p class="burger__p"></p>
+    </div>
     <aside class="aside">
       <h1 class="aside__h1">Idea Box Redux</h1>
       <h2 class="aside__h2">Filter Starred Ideas</h2>
@@ -19,9 +25,15 @@
       </button>
       <div class="aside__div">
         <h2 class="aside__h2">Filter by Quality</h2>
-        <button id="swill" class="aside__button aside__button-quality">Swill</button>
-        <button id="plausible" class="aside__button aside__button-quality">Plausible</button>
-        <button id="genius" class="aside__button aside__button-quality">Genius</button>
+        <button id="swill" class="aside__button aside__button-quality">
+          Swill
+        </button>
+        <button id="plausible" class="aside__button aside__button-quality">
+          Plausible
+        </button>
+        <button id="genius" class="aside__button aside__button-quality">
+          Genius
+        </button>
         <h2 class="aside__h2">New Quality</h2>
         <input class="aside__input" type="text" />
         <button type="submit" class="aside__button aside__button-large">
@@ -32,10 +44,12 @@
     <section class="section">
       <form class="section__form">
         <label class="section__form__label" for="title">Title</label>
-        <input id="title" class="section__form__input-title" type="text"/>
+        <input id="title" class="section__form__input-title" type="text" />
         <label class="section__form__label" for="body">Body</label>
-        <input id="body" class="section__form__input-body" type="text-area"/>
-        <button type="submit" class="section__form__div__button" disabled>Save</button>
+        <input id="body" class="section__form__input-body" type="text-area" />
+        <button type="submit" class="section__form__div__button" disabled>
+          Save
+        </button>
         <div class="section__form__div">
           <input
             class="section__form__div__input-search"

@@ -1,5 +1,8 @@
+// Global Variables
 var ideaArray = JSON.parse(localStorage.getItem('ideaObj')) || [];
 var qualities = ['Swill', 'Plausible', 'Genius'];
+
+// Query Selectors
 var titleInput = document.querySelector('.section__form__input-title');
 var bodyInput = document.querySelector('.section__form__input-body');
 var saveButton = document.querySelector('.section__form__div__button');
@@ -11,12 +14,16 @@ var plausible = document.querySelector('#plausible');
 var genius = document.querySelector('#genius');
 var searchBox = document.querySelector('.section__form__div__input-search');
 var starredIdeasButton = document.querySelector('#starred-ideas');
+var burgerMenu = document.querySelector('.burger-menu');
+var burgerClose = document.querySelector('.burger-menu-close');
+var burgerContent = document.querySelector('.burger__p');
 
 // Functions on page load
 reassignClass();
 spliceOnLoad();
 persist();
 promptIdea();
+toggleBurgerIcon();
 
 // Event Listeners
 saveButton.addEventListener('click', saveHandler);
@@ -24,34 +31,25 @@ searchIdeas.addEventListener('keyup', function() {
   searchFilter(ideaArray);
   searchFilter(qualityArray);
 });
-main.addEventListener('click', mainHandler);
-main.addEventListener('keydown', function(event) {
-  if (event.keyCode === 13) {
-    event.preventDefault();
-    if (event.target.closest('.main__container__h3')) {
-      event.target.closest('.main__container__h3').blur();
-    } else if (event.target.closest('.main__container__p')) {
-      event.target.closest('.main__container__p').blur();
-    }
-  }
-  editCardTitle('.main__container__h3', event);
-  editCardP('.main__container__p', event);
-});
+
 titleInput.addEventListener('keyup', enableSaveButton);
 bodyInput.addEventListener('keyup', enableSaveButton);
-swill.addEventListener('click', function() {
-  searchBox.value = '';
-  filter(1);
-});
-plausible.addEventListener('click', function() {
-  searchBox.value = '';
-  filter(2);
-});
-genius.addEventListener('click', function() {
-  searchBox.value = '';
-  filter(3);
-});
+main.addEventListener('click', mainHandler);
+main.addEventListener('keydown', enterEvent);
+swill.addEventListener('click', swillHandler);
+plausible.addEventListener('click', plausibleHandler);
+genius.addEventListener('click', geniusHandler);
 starredIdeasButton.addEventListener('click', starHandler);
+burgerMenu.addEventListener('click', function() {
+  openBurger();
+  toggleBurgerIcon2();
+  burgerClose.style.visibility = 'visible';
+});
+burgerClose.addEventListener('click', function() {
+  changeBurgerIconBack();
+  toggleBurgerIcon();
+  burgerMenu.style.visibility = 'visible';
+});
 
 function saveHandler(event) {
   event.preventDefault();
@@ -70,13 +68,57 @@ function mainHandler(event) {
   starIt(event);
   upvote(event);
   downvote(event);
+  enterEvent(event);
   promptIdea();
+}
+
+function enterEvent(event) {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+    if (event.target.closest('.main__container__h3')) {
+      event.target.closest('.main__container__h3').blur();
+    } else if (event.target.closest('.main__container__p')) {
+      event.target.closest('.main__container__p').blur();
+    }
+  }
+  editCardTitle('.main__container__h3', event);
+  editCardP('.main__container__p', event);
+}
+
+function swillHandler() {
+  searchBox.value = '';
+  filter(1);
+  if (event.target === swill) {
+    swill.classList.add('active-button');
+    plausible.classList.remove('active-button');
+    genius.classList.remove('active-button');
+  }
+}
+
+function plausibleHandler() {
+  searchBox.value = '';
+  filter(2);
+  if (event.target === plausible) {
+    plausible.classList.add('active-button');
+    swill.classList.remove('active-button');
+    genius.classList.remove('active-button');
+  }
+}
+
+function geniusHandler() {
+  searchBox.value = '';
+  filter(3);
+  if (event.target === genius) {
+    genius.classList.add('active-button');
+    swill.classList.remove('active-button');
+    plausible.classList.remove('active-button');
+  }
 }
 
 function starHandler() {
   searchBox.value = '';
   starredCards();
-  toggleStarText(); 
+  toggleStarText();
 }
 
 function newIdea() {
@@ -170,18 +212,17 @@ function clearInput(input) {
 
 function searchFilter(array) {
   var search = searchBox.value.toLowerCase();
-  var results = array.filter(function(word) {
+  var results = array.filter(function(cardObject) {
     return (
-      word.title.toLowerCase().includes(search) ||
-      word.body.toLowerCase().includes(search)
+      cardObject.title.toLowerCase().includes(search) ||
+      cardObject.body.toLowerCase().includes(search)
     );
   });
   main.innerHTML = '';
-  results.map(function(word) {
-    appendCard(word);
+  results.map(function(cardObject) {
+    appendCard(cardObject);
   });
 }
-
 
 function findID(event) {
   var container = event.target.closest('.main__container');
@@ -295,10 +336,10 @@ function persist() {
 }
 
 function filter(qualities) {
-    main.innerHTML = '';
-    qualityArray = ideaArray.filter(idea => idea.quality === qualities);
-    qualityArray.map(filteredIdeas => appendCard(filteredIdeas));
-    starredIdeasButton.innerHTML = 'View All Ideas';
+  main.innerHTML = '';
+  qualityArray = ideaArray.filter(idea => idea.quality === qualities);
+  qualityArray.map(filteredIdeas => appendCard(filteredIdeas));
+  starredIdeasButton.innerHTML = 'View All Ideas';
 }
 
 function starredCards() {
@@ -308,10 +349,49 @@ function starredCards() {
 }
 
 function toggleStarText() {
-  if(starredIdeasButton.innerHTML === 'Show Starred Ideas') {
-  starredIdeasButton.innerHTML = 'View All Ideas';
+  if (starredIdeasButton.innerHTML == 'Show Starred Ideas') {
+    starredIdeasButton.innerHTML = 'View All Ideas';
   } else {
     starredIdeasButton.innerHTML = 'Show Starred Ideas';
     persist();
   }
+}
+
+function openBurger() {
+  burgerContent.insertAdjacentHTML(
+    'afterbegin',
+    `<h2 class="aside__h2">Filter Starred Ideas</h2>
+      <button id="starred-ideas" class="aside__button aside__button-large">
+        Show Starred Ideas
+      </button>
+      <div class="aside__div">
+        <h2 class="aside__h2">Filter by Quality</h2>
+        <button id="swill" class="aside__button aside__button-quality">
+          Swill
+        </button>
+        <button id="plausible" class="aside__button aside__button-quality">
+          Plausible
+        </button>
+        <button id="genius" class="aside__button aside__button-quality">
+          Genius
+        </button>
+        <h2 class="aside__h2">New Quality</h2>
+        <input class="aside__input" type="text" />
+        <button type="submit" class="aside__button aside__button-large">
+          Add New Quality
+        </button>
+      </div>`
+  );
+}
+
+function toggleBurgerIcon() {
+  burgerClose.style.visibility = 'hidden';
+}
+
+function toggleBurgerIcon2() {
+  burgerMenu.style.visibility = 'hidden';
+}
+
+function changeBurgerIconBack() {
+  burgerContent.remove();
 }
