@@ -24,6 +24,7 @@ reassignClass();
 spliceOnLoad();
 persist();
 promptIdea();
+setupBurgerMenu();
 
 // Event Listeners
 saveButton.addEventListener('click', saveHandler);
@@ -351,30 +352,6 @@ function toggleStarText() {
 
 function toggleBurger(event) {
   if (event.target === burgerMenu) {
-    burgerContent.insertAdjacentHTML(
-      'afterbegin',
-      `<h2 class="aside__h2">Filter Starred Ideas</h2>
-      <button id="starred-ideas" class="aside__button aside__button-large">
-        Show Starred Ideas
-      </button>
-      <div class="aside__div">
-        <h2 class="aside__h2">Filter by Quality</h2>
-        <button id="swill" class="aside__button aside__button-quality">
-          Swill
-        </button>
-        <button id="plausible" class="aside__button aside__button-quality">
-          Plausible
-        </button>
-        <button id="genius" class="aside__button aside__button-quality">
-          Genius
-        </button>
-        <h2 class="aside__h2">New Quality</h2>
-        <input class="aside__input" type="text" />
-        <button type="submit" class="aside__button aside__button-large">
-          Add New Quality
-        </button>
-      </div>`
-    );
     toggleOn();
   }
   if (event.target === burgerClose) {
@@ -392,4 +369,33 @@ function toggleOff() {
   burgerClose.classList.add('hidden');
   burgerMenu.classList.remove('hidden');
   burgerContent.classList.add('hidden');
+}
+
+function setupBurgerMenu() {
+  burgerContent.insertAdjacentHTML(
+    'afterbegin',
+    `<h2 class="aside__h2">Filter Starred Ideas</h2>
+    <button id="starred-ideas" class="aside__button aside__button-large">
+      Show Starred Ideas
+    </button>
+    <div class="aside__div">
+      <h2 class="aside__h2">Filter by Quality</h2>
+      <button id="swill" class="aside__button aside__button-quality">
+        Swill
+      </button>
+      <button id="plausible" class="aside__button aside__button-quality">
+        Plausible
+      </button>
+      <button id="genius" class="aside__button aside__button-quality">
+        Genius
+      </button>
+      <h2 class="aside__h2">New Quality</h2>
+      <input class="aside__input" type="text" />
+      <button type="submit" class="aside__button aside__button-large">
+        Add New Quality
+      </button>
+    </div>`
+  );
+
+  toggleOff();
 }
