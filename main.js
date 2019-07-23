@@ -17,13 +17,13 @@ var starredIdeasButton = document.querySelector('#starred-ideas');
 var burgerMenu = document.querySelector('.burger-menu');
 var burgerClose = document.querySelector('.burger-menu-close');
 var burgerContent = document.querySelector('.burger__p');
+var burgerBurger = document.querySelector('.burger-burger');
 
 // Functions on page load
 reassignClass();
 spliceOnLoad();
 persist();
 promptIdea();
-toggleBurgerIcon();
 
 // Event Listeners
 saveButton.addEventListener('click', saveHandler);
@@ -40,16 +40,8 @@ swill.addEventListener('click', swillHandler);
 plausible.addEventListener('click', plausibleHandler);
 genius.addEventListener('click', geniusHandler);
 starredIdeasButton.addEventListener('click', starHandler);
-burgerMenu.addEventListener('click', function() {
-  openBurger();
-  toggleBurgerIcon2();
-  burgerClose.style.visibility = 'visible';
-});
-burgerClose.addEventListener('click', function() {
-  changeBurgerIconBack();
-  toggleBurgerIcon();
-  burgerMenu.style.visibility = 'visible';
-});
+burgerMenu.addEventListener('click', toggleBurger);
+burgerClose.addEventListener('click', toggleBurger);
 
 function saveHandler(event) {
   event.preventDefault();
@@ -357,10 +349,11 @@ function toggleStarText() {
   }
 }
 
-function openBurger() {
-  burgerContent.insertAdjacentHTML(
-    'afterbegin',
-    `<h2 class="aside__h2">Filter Starred Ideas</h2>
+function toggleBurger(event) {
+  if (event.target === burgerMenu) {
+    burgerContent.insertAdjacentHTML(
+      'afterbegin',
+      `<h2 class="aside__h2">Filter Starred Ideas</h2>
       <button id="starred-ideas" class="aside__button aside__button-large">
         Show Starred Ideas
       </button>
@@ -381,17 +374,22 @@ function openBurger() {
           Add New Quality
         </button>
       </div>`
-  );
+    );
+    toggleOn();
+  }
+  if (event.target === burgerClose) {
+    toggleOff();
+  }
 }
 
-function toggleBurgerIcon() {
-  burgerClose.style.visibility = 'hidden';
+function toggleOn() {
+  burgerMenu.classList.add('hidden');
+  burgerClose.classList.remove('hidden');
+  burgerContent.classList.remove('hidden');
 }
 
-function toggleBurgerIcon2() {
-  burgerMenu.style.visibility = 'hidden';
-}
-
-function changeBurgerIconBack() {
-  burgerContent.remove();
+function toggleOff() {
+  burgerClose.classList.add('hidden');
+  burgerMenu.classList.remove('hidden');
+  burgerContent.classList.add('hidden');
 }

@@ -20,7 +20,7 @@ class Idea {
     localStorage.setItem('ideaObj', JSON.stringify(ideaArray));
   }
 
-  updateQuality(ideaArray){
+  updateQuality(ideaArray) {
     localStorage.setItem('ideaObj', JSON.stringify(ideaArray));
   }
 }
