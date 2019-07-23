@@ -82,6 +82,10 @@ body {
   background-color: #d1421a;
 }
 
+.aside__button-quality:active {
+  outline: none;
+} 
+
 /* .aside__button-quality:hover:before {
   background-color: red;
 } */
@@ -90,6 +94,24 @@ body {
   background-color: #d1421a;
   border-left: 8px solid #f58d6f;
   outline: none;
+}
+
+.show-more-less {
+  background-color: #5356a4;
+  border: none;
+  color: #e9e9f3;
+  width: 90%;
+  height: 40px;
+  display: block;
+  font-size: 1.2em;
+  font-weight: 700;
+  margin: 20px auto;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.show-more-less:hover {
+  background-color: #a9aad2;
 }
 
 .aside__input {

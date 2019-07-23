@@ -18,7 +18,7 @@ var burgerMenu = document.querySelector('.burger-menu');
 var burgerClose = document.querySelector('.burger-menu-close');
 var burgerContent = document.querySelector('.burger__p');
 var burgerBurger = document.querySelector('.burger-burger');
-var mainColor = document.querySelector('.main-color');
+var showMoreLess = document.querySelector('.show-more-less');
 
 // Functions on page load
 reassignClass();
@@ -33,7 +33,7 @@ searchIdeas.addEventListener('keyup', function() {
   searchFilter(ideaArray);
   searchFilter(qualityArray);
 });
-
+showMoreLess.addEventListener('click', toggleShow);
 titleInput.addEventListener('keyup', enableSaveButton);
 bodyInput.addEventListener('keyup', enableSaveButton);
 main.addEventListener('click', mainHandler);
@@ -64,6 +64,10 @@ function mainHandler(event) {
   downvote(event);
   enterEvent(event);
   promptIdea();
+}
+
+function toggleShow() {
+  show();
 }
 
 function enterEvent(event) {
@@ -119,7 +123,8 @@ function newIdea() {
   var idea = new Idea(Date.now(), titleInput.value, bodyInput.value);
   ideaArray.push(idea);
   idea.saveToStorage(ideaArray);
-  appendCard(idea);
+  // appendCard(idea);
+  // persist();
 }
 
 function remakeNewIdea(id, title, body, star, quality) {
@@ -326,7 +331,26 @@ function qualityTextChange(quality, event) {
 }
 
 function persist() {
-  ideaArray.map(anIdea => appendCard(anIdea));
+  main.innerHTML = '';
+  var tempArray = []
+  for(var i = 0; i < ideaArray.length; i++) {
+    tempArray.push(ideaArray[i]);
+    if(tempArray.length > 10) {
+      tempArray.shift()
+    }
+  }
+  tempArray.map(anIdea => appendCard(anIdea));
+}
+
+function newIdea() {
+  var idea = new Idea(Date.now(), titleInput.value, bodyInput.value);
+  ideaArray.push(idea);
+  idea.saveToStorage(ideaArray);
+  if(ideaArray.length < 10) {
+  appendCard(idea);
+} else {
+  persist();
+  }
 }
 
 function filter(qualities) {
@@ -401,4 +425,18 @@ function setupBurgerMenu() {
   );
 
   toggleOff();
+}
+
+function show() {
+  if(showMoreLess.innerText === 'Show More') {
+    console.log('show more hellooooooo')
+  main.innerHTML = '';
+  ideaArray.map(anIdea => appendCard(anIdea));
+  showMoreLess.innerHTML = 'Show Less';
+  } else if (showMoreLess.innerText === 'Show Less') {
+    console.log('show les hiiiiiiii')
+    main.innerHTML = '';
+    persist();
+    showMoreLess.innerHTML = 'Show More';
+  }
 }
