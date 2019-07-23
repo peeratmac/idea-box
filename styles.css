@@ -305,4 +305,8 @@ img {
   .main {
     width: 100%;
   }
+
+  .hidden {
+    display: none;
+  }
 }
