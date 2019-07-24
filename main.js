@@ -66,6 +66,7 @@ function mainHandler(event) {
 function starHandler() {
   toggleStarText();
   searchFilter();
+  promptIdea();
 }
 
 function swillHandler(event) {
@@ -350,15 +351,17 @@ function qualityTextChange(quality, event) {
 }
 
 function persist() {
-  main.innerHTML = '';
-  var tempArray = [];
-  for (var i = 0; i < ideaArray.length; i++) {
-    tempArray.push(ideaArray[i]);
-    if (tempArray.length > 10) {
-      tempArray.shift();
+  if (ideaArray.length > 0) {
+    main.innerHTML = '';
+    var tempArray = [];
+    for (var i = 0; i < ideaArray.length; i++) {
+      tempArray.push(ideaArray[i]);
+      if (tempArray.length > 10) {
+        tempArray.shift();
+      }
     }
+    tempArray.map(anIdea => appendCard(anIdea));
   }
-  tempArray.map(anIdea => appendCard(anIdea));
 }
 
 function newIdea() {
