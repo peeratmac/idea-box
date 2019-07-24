@@ -336,6 +336,7 @@ img {
 
   .main {
     width: 100%;
+    justify-content: center;
   }
 
   .hidden {
@@ -343,9 +344,7 @@ img {
   }
 
   .main__container {
-    max-width: 300px;
-    min-width: 250px;
-    width: auto;
+    width: 300px;
   }
 
   .aside__div {
