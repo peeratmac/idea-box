@@ -163,15 +163,9 @@ function appendCard(idea) {
     'afterbegin',
     `<container class="main__container" data-id="${idea.id}">
   <header class="main__container__header">
-    <img
-      class="main__container__header__img-starred"
-      src="${s}"
-      alt="starred"
+    <img class="main__container__header__img-starred" src="${s}" alt="starred"
     />
-    <img
-      class="main__container__header__img-delete"
-      src="images/delete.svg"
-      alt="delete button"
+    <img class="main__container__header__img-delete" src="images/delete.svg" alt="delete button"
     />
   </header>
   <h3 class="main__container__h3" id="main__container__h3" contenteditable="true">${
@@ -181,18 +175,12 @@ function appendCard(idea) {
     idea.body
   }</p>
   <footer class="main__container__footer">
-    <img
-      class="main__container__footer__img-upvote"
-      src="images/upvote.svg"
-      alt="increase quality"
+    <img class="main__container__footer__img-upvote" src="images/upvote.svg" onmouseover="this.src='images/upvote-active.svg'" onmouseout="this.src='images/upvote.svg'" alt="increase quality"
     />
     <p class="main__container__footer__p">Quality: ${
       qualities[idea.quality - 1]
     }</p>
-    <img
-      class="main__container__footer__img-downvote"
-      src="images/downvote.svg"
-      alt="decrease quality"
+    <img class="main__container__footer__img-downvote" src="images/downvote.svg" onmouseover="this.src='images/downvote-active.svg'" onmouseout="this.src='images/downvote.svg'" alt="decrease quality"
     />
   </footer>
 </container>`

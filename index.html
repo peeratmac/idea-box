@@ -2,80 +2,50 @@
 <html>
   <head>
     <title>Idea Box</title>
-    <link rel="stylesheet" href="normalize.css" />
-    <link rel="stylesheet" href="styles.css" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link
-      href="https://fonts.googleapis.com/css?family=Open+Sans:300,700&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="stylesheet" href="normalize.css"/>
+    <link rel="stylesheet" href="styles.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,700&display=swap" rel="stylesheet"/>
   </head>
   <body>
     <div class="burger">
-      <img class="burger-menu" src="images/menu.svg" />
-      <img class="burger-menu-close hidden" src="images/menu-close.svg" />
+      <img class="burger-menu" src="images/menu.svg"/>
+      <img class="burger-menu-close hidden" src="images/menu-close.svg"/>
       <h2 class="burger__h2">IdeaBox Redux</h2>
       <p class="burger__p"></p>
     </div>
     <aside class="aside">
       <h1 class="aside__h1">IdeaBox Redux</h1>
       <h2 class="aside__h2">Filter Starred Ideas</h2>
-      <button id="starred-ideas" class="aside__button aside__button-large">
-        Show Starred Ideas
-      </button>
+      <button id="starred-ideas" class="aside__button aside__button-large">Show Starred Ideas</button>
       <div class="aside__div">
         <h2 class="aside__h2">Filter by Quality</h2>
-        <button id="swill" class="aside__button aside__button-quality">
-          Swill
-        </button>
-        <button id="plausible" class="aside__button aside__button-quality">
-          Plausible
-        </button>
-        <button id="genius" class="aside__button aside__button-quality">
-          Genius
-        </button>
+        <button id="swill" class="aside__button aside__button-quality">Swill</button>
+        <button id="plausible" class="aside__button aside__button-quality">Plausible</button>
+        <button id="genius" class="aside__button aside__button-quality">Genius</button>
         <h2 class="aside__h2">New Quality</h2>
-        <input class="aside__input" type="text" />
-        <button type="submit" class="aside__button aside__button-large">
-          Add New Quality
-        </button>
+        <input class="aside__input" type="text"/>
+        <button type="submit" class="aside__button aside__button-large">Add New Quality</button>
       </div>
       <button class="show-more-less">Show More</button>
     </aside>
     <section class="section">
       <form class="section__form">
         <label class="section__form__label" for="title">Title</label>
-        <input id="title" class="section__form__input-title" type="text" />
+        <input id="title" class="section__form__input-title" type="text"/>
         <label class="section__form__label" for="body">Body</label>
-        <input id="body" class="section__form__input-body" type="text-area" />
-        <button type="submit" class="section__form__div__button" disabled>
-          Save
-        </button>
+        <input id="body" class="section__form__input-body" type="text-area"/>
+        <button type="submit" class="section__form__div__button" disabled>Save</button>
         <div class="section__form__div">
-          <input
-            class="section__form__div__input-search"
-            type="text"
-            placeholder="Search Ideas"
-          />
-          <img
-            class="section__form__div__img-search"
-            src="images/search.svg"
-            alt="search icon"
-          />
+          <input class="section__form__div__input-search" type="text" placeholder="Search Ideas"/>
+          <img class="section__form__div__img-search" src="images/search.svg" alt="search icon"/>
         </div>
       </form>
     </section>
     <main class="main">
       <div class="idea-empty">
-        <img
-          class="idea-img"
-          src="images/idea-empty.svg"
-          alt="idea light bulb icon"
-        />
+        <img class="idea-img" src="images/idea-empty.svg" alt="idea light bulb icon"/>
         <p>ADD YOURSELF SOME IDEAS</p>
-        <p>TEST</p>
-        <p>TEST</p>
-        <p>Need Styling</p>
       </div>
     </main>
   </body>
