@@ -82,7 +82,7 @@ body {
 
 .aside__button-quality:active {
   outline: none;
-} 
+}
 
 .active-button {
   background-color: #d1421a;
@@ -272,10 +272,11 @@ body {
 
 .idea-empty {
   align-items: center;
+  background-color: #eaeaf4;
   color: #1f1f3d;
   display: flex;
   flex-direction: column;
-  font-size: 50px;
+  font-size: 20px;
   font-weight: 800;
   width: 100%;
 }
@@ -319,7 +320,7 @@ img {
   }
 
   .burger__p {
-    background-color: #1F1F3D;
+    background-color: #1f1f3d;
     margin: 0px;
     width: 100%;
     z-index: 10;
