@@ -272,12 +272,12 @@ body {
 
 .idea-empty {
   align-items: center;
+  background-color: #eaeaf4;
   color: #1f1f3d;
   display: flex;
   flex-direction: column;
   font-size: 20px;
   font-weight: 800;
-  margin-bottom: 20px;
   width: 100%;
 }
 
