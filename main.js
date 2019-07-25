@@ -10,6 +10,7 @@ var bodyInput = document.querySelector('.section__form__input-body');
 var saveButton = document.querySelector('.section__form__div__button');
 var searchIdeas = document.querySelector('.section__form__div__input-search');
 var emptyIdea = document.querySelector('.idea-empty');
+var starText = document.querySelector('.main__star-text')
 var main = document.querySelector('.main');
 var asideDiv = document.querySelector('.aside__div');
 var searchBox = document.querySelector('.section__form__div__input-search');
@@ -63,10 +64,11 @@ function mainHandler(event) {
   promptIdea();
 }
 
-function starHandler() {
+function starHandler(event) {
   toggleStarText();
   searchFilter();
   promptIdea();
+  starMessage(event)
 }
 
 function swillHandler(event) {
@@ -198,6 +200,22 @@ function promptIdea() {
     emptyIdea.classList.add('hidden');
   } else {
     emptyIdea.classList.remove('hidden');
+  }
+}
+
+function starMessage(event) {
+  var starredIdeas = ideaArray.filter(function(cardObj) {
+    return (cardObj.star === true)
+  })
+  if (starredIdeas.length < 1 && event.target.parentElement.nextElementSibling.nextElementSibling.children.length < 1) {
+     main.insertAdjacentHTML(
+      'afterbegin',
+      `<div class="main__star-text">
+        <p>YOU'VE GOT STARS IN  YOUR EYES</p>
+        <p> ⭐️ STAR SOME IDEAS ⭐️ </p>`
+      )
+  } else if (starredIdeas.length > 0){
+    console.log("it wants to turn it off!")
   }
 }
 

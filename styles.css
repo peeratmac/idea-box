@@ -281,6 +281,16 @@ body {
   width: 100%;
 }
 
+.main__star-text {
+  background-color: #eaeaf4;
+  color: #1f1f3d;
+  font-size: 20px;
+  font-weight: 800;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}
+
 .hidden {
   display: none;
 }
